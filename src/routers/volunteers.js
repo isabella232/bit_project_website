@@ -16,7 +16,7 @@ router.post('/volunteers', async (req, res) =>{
 	console.log(volunteer);
     try { 
     	await volunteer.save()
-    	res.status(201).send(volunteer)
+    	res.status(201).redirect("Login.html")
     } catch(e) {
 		console.log(e);
         res.status(400).send(e)

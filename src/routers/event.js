@@ -11,18 +11,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // REST APIs
-// Add Event
+
+// Routes to add event
 router.post('/events', async (req, res) =>{
     const event = new Event(req.body)
-	console.log(event);
-	console.log(event.href);
     try { 
-    	await event.save()
-    	res.status(201).send(event)
+		await event.save()
+
+		// Redirect after adding an event
+    	res.status(201).redirect("/events")
     } catch(e) {
         res.status(400).send(e)
     }
 })
+
+// Routes to Events Browsing Page
+router.get('/events', async (req, res) => { 
+	try { 
+		const events = await Event.find({})
+
+		// Render "events.hbs" with const events
+		res.render('events', {
+			events: events
+		})
+	} catch (e) { 
+		res.status(500).send(e)
+	}
+})
+
 
 // Read ALL events
 // Added functionality, if url has eventName search parameter, fitlers for that event name

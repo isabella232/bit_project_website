@@ -9,25 +9,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ]
 
-const bodyParser = require('body-parser')
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
-
-const publicDirectoryPath = path.join(__dirname, '../../public')
+// Configure views directory path
 const viewsPath = path.join(__dirname, '../templates/views')
-const partialsPath = path.join(__dirname, '../templates/partials')
-
-console.log(publicDirectoryPath);
-console.log(viewsPath);
-console.log(partialsPath);
-
-
 router.set('view engine', 'hbs')
 router.set('views', viewsPath)
-hbs.registerPartials(partialsPath)
 
-// Set up static directory to serve
-router.use(express.static(publicDirectoryPath))
 
 router.get('', (req, res) => {
 	router.render('index')
@@ -86,23 +72,11 @@ router.get('/profiles', (req,res) => {
 })
 
 router.get('/login', (req,res) => { 
-	router.render('login')
+	router.render('Login.html')
 })
 
 router.get('/contactus', (req,res) => { 
 	router.render('contactus')
-})
-
-router.get('/events', async (req, res) => { 
-	try { 
-		const events = await Event.find({})
-		// console.log(events)
-		res.render('events', {
-			events: events
-		})
-	} catch (e) { 
-		res.status(600).send()
-	}
 })
 
 router.get('*', (req, res) => { 
