@@ -17,6 +17,11 @@ const publicDirectoryPath = path.join(__dirname, '../../public')
 const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
 
+console.log(publicDirectoryPath);
+console.log(viewsPath);
+console.log(partialsPath);
+
+
 router.set('view engine', 'hbs')
 router.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
