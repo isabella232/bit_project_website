@@ -21,7 +21,6 @@ router.get('', (req, res) => {
 
 router.get('/turkey-trot', async (req, res) => {
 	const eventName = req.params
-
 	try {
 		const event = await Event.findOne({eventName:"Turkey Trot"})
 		console.log(event);
@@ -79,8 +78,8 @@ router.get('/contactus', (req,res) => {
 	router.render('contactus')
 })
 
-router.get('*', (req, res) => { 
-	router.render('404 error')
-})
+// router.get('*', (req, res) => { 
+// 	router.render('404 error')
+// })
 
 module.exports = router
