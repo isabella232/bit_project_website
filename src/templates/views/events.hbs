@@ -36,23 +36,27 @@
     <div class="events">
         <ul class="event-ul">
             {{#each events}}
-                <li>
-                    <a href={{this.href}}>
-                    <div class=event-content>
-                        <img class="event-imgs" src="https://via.placeholder.com/150" alt="Coastal Cleanup">
-                        <div class="event-info">
-                            <h4 class="event-title">{{this.eventName}}</h4>
-                            <div class="event-info-1">
-                                <span>{{this.date}}</span>
-                                <span>| {{this.time}}</span>
+                <form action={{this.href}} method="GET">
+                    <button type="submit">
+                        <li>
+                            <a href={{this.href}}>
+                            <div class="event-content">
+                                <img class="event-imgs" src="https://via.placeholder.com/150" alt="Coastal Cleanup">
+                                <div class="event-info">
+                                    <h4 class="event-title">{{this.eventName}}</h4>
+                                    <div class="event-info-1">
+                                        <span>{{this.date}}</span>
+                                        <span>| {{this.time}}</span>
+                                    </div>
+                                    <div class="event-info-2">
+                                        <span>{{this.location}}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="event-info-2">
-                                <span>{{this.location}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                </li>
+                            </a>
+                        </li>
+                    </button>
+                </form>
             {{/each}}
             {{!-- <li>
                 <a href="/coastal-cleanup">

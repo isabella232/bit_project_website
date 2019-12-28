@@ -15,11 +15,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes to add event
 router.post('/events', async (req, res) =>{
     const event = new Event(req.body)
+	console.log(event);
+	event.href = "/events/" + event.eventName
     try { 
-		await event.save()
-
-		// Redirect after adding an event
-    	res.status(201).redirect("/events")
+    	await event.save()
+    	res.status(201).redirect('/events')
     } catch(e) {
         res.status(400).send(e)
     }
@@ -65,24 +65,25 @@ router.get('/event', async (req, res) => {
 })
 
 // Read SINGLE event
-router.get('/events/:id', async (req, res) => { 
-    const _id = req.params.id
+// Silenced because it was being used before /events/:eventName
+// router.get('/events/:id', async (req, res) => { 
+//     const _id = req.params.id
 
-	try {
-		const event = await Event.findById(_id)
+// 	try {
+// 		const event = await Event.findById(_id)
 
-		// if not found return 404 error
-		if (!event) { 
-			return res.status(404).send()
-		}
+// 		// if not found return 404 error
+// 		if (!event) { 
+// 			return res.status(404).send()
+// 		}
 
-		// if found send user
-		res.send(event)
-	//send 500 error if error
-	} catch(e) { 
-		res.status(500).send(e)
-	}
-})
+// 		// if found send user
+// 		res.send(event)
+// 	//send 500 error if error
+// 	} catch(e) { 
+// 		res.status(500).send(e)
+// 	}
+// })
 
 // Delete Event
 router.delete('/events/:id', async (req, res) => {  
