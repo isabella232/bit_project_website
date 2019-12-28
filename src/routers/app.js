@@ -19,12 +19,15 @@ router.get('', (req, res) => {
 	router.render('index')
 })
 
-router.get('/turkey-trot', async (req, res) => {
-	const eventName = req.params
+
+router.get('/events/:eventName', async (req, res) => {
+	var name = req.params.eventName
+	var eventPath = "/events/" + req.params.eventName
+	console.log(eventPath);
+
 	try {
-		const event = await Event.findOne({eventName:"Turkey Trot"})
-		console.log(event);
-		res.render('turkey-trot', {
+		const event = await Event.findOne({href: eventPath})
+		res.render(name, {
 			eventName: event.eventName,
 			coordinator: event.coordinator,
 			// // date: event.date,
@@ -37,27 +40,6 @@ router.get('/turkey-trot', async (req, res) => {
 		})
 	} catch(e) {
 		res.status(500).send(e)
-	}
-})
-
-router.get('/coastal-cleanup', async (req, res) => {
-	const eventName = req.params
-
-	try {
-		const event = await Event.findOne({eventName:"Coastal Cleanup"})
-		res.render('coastal-cleanup', {
-			eventName: event.eventName,
-			coordinator: event.coordinator,
-			// // date: event.date,
-			month: monthNames[Number(event.date.slice(5, 7)) - 1].split("").join(" ").toUpperCase(),
-			day: event.date.slice(8),
-			time: event.time,
-			location: event.location,
-			description: event.description,
-			attendeeCount: event.attendeeCount
-		})
-	} catch(e) {
-		res.status(500).send()
 	}
 })
 
