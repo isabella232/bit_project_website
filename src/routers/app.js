@@ -24,7 +24,6 @@ router.get('/events/:eventName', async (req, res) => {
 	var name = req.params.eventName
 	var eventPath = "/events/" + req.params.eventName
 	console.log(eventPath);
-
 	try {
 		const event = await Event.findOne({href: eventPath})
 		res.render(name, {
