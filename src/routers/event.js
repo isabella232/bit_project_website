@@ -29,7 +29,8 @@ router.post('/events', async (req, res) =>{
 router.get('/events', async (req, res) => { 
 	try { 
 		const events = await Event.find({})
-
+		console.log("render events page")
+		console.log(res)
 		// Render "events.hbs" with const events
 		res.render('events', {
 			events: events
@@ -50,10 +51,14 @@ router.get('/event', async (req, res) => {
 		console.log(req.query);
 		// const event = await Event.findOne({eventName:"Turkey Trot"})
 		// if filter is present
+		console.log(req.query.eventName);
 		if (req.query.eventName) { 
 			query.eventName = req.query.eventName
 			const events = await Event.find({"eventName":query.eventName})
-			res.send(events)
+			console.log(events);
+			res.render('events', {
+				events: events
+			})
 		//no filter present
 		} else { 
 			const events = await Event.find()

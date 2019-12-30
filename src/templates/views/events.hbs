@@ -23,10 +23,9 @@
     <h1 class="main-title">Volunteer Event Page</h1>
     <div class="wrap">
         <div class="search">
-            <form action="/event" method="GET"></form>
+            <form id="searchForm" action="/event" method="GET">
                 <input type="text" name="eventName" class="searchTerm" placeholder="Search Events">
-                <button type="submit" class="searchButton">Q</button>
-                    {{!-- <i class="fa fa-search"></i> --}}
+                <button class="searchButton">Q</button>
             </form>
         </div>
         {{!-- <form action="/events" method="POST"> --}}
@@ -58,41 +57,8 @@
                     </button>
                 </form>
             {{/each}}
-            {{!-- <li>
-                <a href="/coastal-cleanup">
-                <div class=event-content>
-                    <img class="event-imgs" src="https://via.placeholder.com/150" alt="Davis Turkey Trot">
-                    <div class="event-info">
-                        <h4 class="event-title">Davis Turkey Trot</h4>
-                        <div class="event-info-1">
-                            <span>December 2, 2019</span>
-                            <span>| 2:30 PM</span>
-                        </div>
-                        <div class="event-info-2">
-                            <span>267 Arroyo Heights Davis, CA 95616</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </li>
-            <li>
-                <a href="event_page_1.html">
-                <div class=event-content>
-                    <img class="event-imgs" src="https://via.placeholder.com/150" alt="Davis Marathon">
-                    <div class="event-info">
-                        <h4 class="event-title">Davis Marathon</h4>
-                        <div class="event-info-1">
-                            <span>December 2, 2019</span>
-                            <span>| 2:30 PM</span>
-                        </div>
-                        <div class="event-info-2">
-                            <span>267 Arroyo Heights Davis, CA 95616</span>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </li> --}}
         </ul>
     </div>
 </body>
+<script src="index.js"></script>
 </html>

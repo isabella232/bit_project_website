@@ -23,10 +23,11 @@
     <h1 class="main-title">Volunteer Event Page</h1>
     <div class="wrap">
         <div class="search">
-           <input type="text" class="searchTerm" placeholder="Search Events">
-           <button type="submit" class="searchButton">
-             <i class="search"></i>
-          </button>
+            <input type="text" id="searchTerm" placeholder="Search Events">
+            <form id="searchForm" action="/event" method="GET">
+                <button type="submit" class="searchButton">
+                </button>
+            </form>
         </div>
         <!-- <form action="/events" method="POST"> -->
             <a href="create-event.html"><button type="submit" class="button">Create New Event</button></a>
@@ -87,5 +88,6 @@
             </li>
         </ul>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>

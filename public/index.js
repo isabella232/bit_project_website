@@ -1,2 +1,1 @@
-var element = document.getElementsByClassName("event-content")
-console.log(element);
+console.log('Client side JS running.');
