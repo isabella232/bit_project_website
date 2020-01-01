@@ -87,6 +87,23 @@ const v4 = {
 	"password":"123sugarr"
 }
 
+VolunteerSchema.statics.findByCredentials = async (email, password) => {
+    console.log('Credential')
+    const volunteer = await Volunteer.findOne({ email })
+    console.log(volunteer)
+    if (!volunteer) {
+        throw new Error('Unable to login')
+    }
+    const isMatch = await bcrypt.compare(password, volunteer.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+
+    return volunteer
+}
+
+
 VolunteerSchema.pre('save', async function (next) {
     const user = this
 

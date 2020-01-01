@@ -74,6 +74,17 @@ router.delete('/volunteers/:id', async (req, res) => {
 	}
 })
 
+router.post('/volunteers/login', async (req, res) => {
+	console.log("Login!")	
+    try {
+		const volunteer = await Volunteer.findByCredentials(req.body.email, req.body.password)
+		console.log("volunteer")
+        res.send(volunteer)
+    } catch (e) {
+        res.status(400).send()
+    }
+})
+
 // Update Volunteer
 router.patch('/volunteers/:id', async (req, res) => { 
 	const updates = Object.keys(req.body) 
