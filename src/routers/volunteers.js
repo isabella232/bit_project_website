@@ -60,6 +60,7 @@ router.delete('/volunteers/:id', async (req, res) => {
 	try {
 		// try to delete volunteer, if found store in volunteer 
 		const volunteer = await volunteer.findByIdAndDelete(req.params.id)
+		const token = await volunteer.generateAuthToken() 
 		
 		// if not found return 404 error
 		if (!volunteer) { 
@@ -78,8 +79,8 @@ router.post('/volunteers/login', async (req, res) => {
 	console.log("Login!")	
     try {
 		const volunteer = await Volunteer.findByCredentials(req.body.email, req.body.password)
-		console.log("volunteer")
-        res.send(volunteer)
+		const token = await volunteer.generateAuthToken() 
+        res.status(201).send({volunteer,token})
     } catch (e) {
         res.status(400).send()
     }
