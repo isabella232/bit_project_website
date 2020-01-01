@@ -75,7 +75,7 @@ router.delete('/volunteers/:id', async (req, res) => {
 })
 
 // Update Volunteer
-router.patch('./volunteers/:id', async (req, res) => { 
+router.patch('/volunteers/:id', async (req, res) => { 
 	const updates = Object.keys(req.body) 
 	const allowedUpdates = ['firstName', 'lastName', 'age', 'email', 'password','eventCount']
 	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -85,12 +85,12 @@ router.patch('./volunteers/:id', async (req, res) => {
 	}
 
 	try { 
-		const volunteer = await Volunteer.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true}) // TODO: check, I think wrong syntax  
-
+		const volunteer = await Volunteer.findById(req.params.id)
+        updates.forEach((update) => volunteer[update] = req.body[update])
+		await volunteer.save()	
 		if (!volunteer) { 
 			return res.status(404).send()
 		}
-
 		res.send(volunteer)
 	} catch (e) {  
 		res.status(400).send()
