@@ -12,8 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Add Volunteer
 
 router.post('/volunteers', async (req, res) =>{
+	console.log(req.body);
 	const volunteer = new Volunteer(req.body)
-	console.log(volunteer);
+	
     try { 
     	await volunteer.save()
     	res.status(201).redirect("Login.html")

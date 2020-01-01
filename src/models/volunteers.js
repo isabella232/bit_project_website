@@ -1,28 +1,17 @@
 const validator = require('validator')
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
-const Volunteer = mongoose.model('Volunteer', {
+const VolunteerSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
         trim: true,
-        // Check if value is all letters [A-z] - is giving errors
-        // validate(value) {
-        //     if (!value.value.match(letters)) {
-        //         throw new Error('Invalid Characters in Name.')
-        //     }
-        // }
     },
     lastName: {
         type: String,
         required: true,
         trim: true,
-        // Check if value is all letters [A-z] - is giving errors
-        // validate(value) {
-        //     if (!value.value.match(letters)) {
-        //         throw new Error('Invalid Characters in Name.')
-        //     }
-        // }
     },
     age: {
         type: Number,
@@ -39,6 +28,7 @@ const Volunteer = mongoose.model('Volunteer', {
         required: true,
         trim: true,
         lowercase: true,
+        unique: true,
         validate(value) {
             if (!validator.isEmail(value)) {
                 throw new Error('Email is invalid.')
@@ -96,5 +86,19 @@ const v4 = {
 	"email":"  wstein@super.com    ",
 	"password":"123sugarr"
 }
+
+VolunteerSchema.pre('save', async function (next) {
+    const user = this
+
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+    console.log(user.password)
+
+    next()
+})
+
+const Volunteer = mongoose.model('Volunteer', VolunteerSchema)
+
 
 module.exports = Volunteer
