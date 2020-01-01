@@ -84,14 +84,14 @@ body {
     color: #9DBFAF;
   }
   
-  /* .searchTerm:focus{
+  .searchTerm:focus{
     color: black;
-  } */
+  }
   
   .searchButton {
-    /* margin-top: 1200px; */
-    /* width: 50px;
-    height: 66px; */
+    margin-top: 1200px; 
+    width: 50px;
+    height: 66px;
     border: 1px solid #00B4CC;
     background: #00B4CC;
     text-align: center;
@@ -101,14 +101,14 @@ body {
     font-size: 20px;
   }
   
-  /* .wrap{
+  .wrap{
     width: 40%;
     position: absolute;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-  } */
+  }
 
   /* list of events */
 .events {
