@@ -112,7 +112,7 @@ router.delete('/events/:id', async (req, res) => {
 
 
 // TODO: Update Event
-router.patch('./events/:id', async (req, res) => { 
+router.patch('/events/:id', async (req, res) => { 
 	const updates = Object.keys(req.body) 
 	const allowedUpdates = ['firstName', 'lastName', 'age', 'email', 'password','eventCount', 'isCoordinator','assignedToEvent']
 	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -121,10 +121,11 @@ router.patch('./events/:id', async (req, res) => {
 		return res.status(400).send({error: 'Invalid update'})
 	}
 
+
 	try { 
 		//spot to fix
-		const Admin = await Admin.findByIdAndUpdate({_id: req.params.id }, req.body, { new: true, runValidators: true}).exec()
-		//spot to fix .exec() needed?
+		const Admin = await Admin.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
+		//spot to fix findByIdAndUpdate({_id: req.params.id }, req.body, { new: true, runValidators: true})
 		if (!Admin) { 
 			return res.status(404).send()
 		}
