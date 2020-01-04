@@ -29,8 +29,6 @@ router.post('/events', async (req, res) =>{
 router.get('/events', async (req, res) => { 
 	try { 
 		const events = await Event.find({})
-		console.log("render events page")
-		console.log(res)
 		// Render "events.hbs" with const events
 		res.render('events', {
 			events: events
