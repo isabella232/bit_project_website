@@ -1,4 +1,3 @@
-
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
@@ -13,7 +12,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 // Paths
-const publicDirectoryPath = path.join(__dirname, '../public')
+const publicDirectoryPath = path.join(__dirname, 'templates/public')
 const viewsPath = path.join(__dirname, 'templates/views')
 
 // Configure views
