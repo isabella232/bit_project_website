@@ -21,15 +21,16 @@
     <img class = "header-image" src="volunteer.png" alt="">
 
     <h1 class="main-title">Volunteer Event Page</h1>
-
-    <form> 
-        <input type="text" name="text" class="search" placeholder ="Search...">
-        <input type="submit" name="submit" class="submit" value="Search">
-      </form>
-
-      
+    <div class="wrap">
+        <div class="search">
+            <input type="text" id="searchTerm" placeholder="Search Events">
+            <form id="searchForm" action="/event" method="GET">
+                <button type="submit" class="searchButton">
+                </button>
+            </form>
+        </div>
         <!-- <form action="/events" method="POST"> -->
-            <a href="create-event.html"><button type="submit-new-event" class="button">Create New Event</button></a>
+            <a href="create-event.html"><button type="submit" class="button">Create New Event</button></a>
         <!-- </form> -->
     </div>
     <div class="events">
@@ -87,5 +88,6 @@
             </li>
         </ul>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>
