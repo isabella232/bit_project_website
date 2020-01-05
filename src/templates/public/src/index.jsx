@@ -1,8 +1,7 @@
-// // import { Calendar } from '~@fullcalendar/core';
-// // import interactionPlugin from '~@fullcalendar/interaction';
-// // import dayGridPlugin from '~@fullcalendar/daygrid';
-// // import timeGridPlugin from '~@fullcalendar/timegrid';
-// // import listPlugin from '~@fullcalendar/list';
+// import FullCalendar from '@fullcalendar/react'
+// import dayGridPlugin from '@fullcalendar/daygrid'
+// import timeGridPlugin from '@fullcalendar/timegrid'
+// import interactionPlugin from '@fullcalendar/interaction' // needed for dayClick
 
 // document.addEventListener('DOMContentLoaded', function() {
 //   var calendarEl = document.getElementById('calendar-component');
@@ -79,5 +78,10 @@
 //   calendar.render();
 // });
 
-// let domContainer = document.querySelector('#calendar-component');
-// ReactDOM.render(<Calendar />, domContainer);
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar-component');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    plugins: [ 'dayGrid' ]// an array of strings!
+  });
+  calendar.render();
+});
