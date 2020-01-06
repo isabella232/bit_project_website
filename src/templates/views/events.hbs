@@ -17,6 +17,7 @@
     <script src='fullcalendar/packages/list/main.js'></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
    
+
     <title>Event Page</title>
 </head>
 <body>
@@ -29,7 +30,7 @@
             <li class="nav-style"><a href="index.html">Home</a></li>
         </ul>
     </header>
-    <img class = "header-image" src="./assets/volunteer.png" alt="">
+    <img class = "header-image" src="volunteer.png" alt="">
 
     <h1 class="main-title">Volunteer Event Page</h1>
     <div class="wrap">
@@ -39,8 +40,9 @@
                 <button class="searchButton">Q</button>
             </form>
         </div>
+        {{!-- <form action="/events" method="POST"> --}}
             <a href="create-event.html"><button type="submit" class="button">Create New Event</button></a>
-
+        {{!-- </form> --}}
     </div>
     <div class="events">
         <ul class="event-ul">
@@ -72,5 +74,7 @@
     <div id = "calendar-component">
     </div>
     <script src='dist/main.js'></script>
-</body>
 
+</body>
+<script src="index.js"></script>
+</html>

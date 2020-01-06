@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes to add event
 router.post('/events', async (req, res) =>{
     const event = new Event(req.body)
-	console.log(event);
 	event.href = "/events/" + event.eventName
     try { 
     	await event.save()
