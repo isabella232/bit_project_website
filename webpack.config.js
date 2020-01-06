@@ -1,43 +1,40 @@
-const path = require('path')
-
+const path = require('path');
 module.exports = {
-    module: {
-        rules: [
-          {
-            test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            use: {
-              loader: "babel-loader"
-            }
-          }
-        ]
-      } ,
     mode: 'development',
-    entry: './src/index.js',
+    entry: './src/templates/public/src/index.jsx',
     resolve: {
-        extensions: [ '.js' ,'.jsx']
+      extensions: [ '.js', '.jsx' ]
     },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader' // will use .babelrc
+          }
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'sass-loader'
+          ]
+        },
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        }
+      ]
+    },
+    devtool: 'source-map',
     output: {
-        filename: 'index.js',
-        path: path.join(__dirname, 'dist')
-    },
-    devtool: 'sourcemap',
-        module: {
-        rules: [
-            {
-            test: /\.s[ac]ss$/i,
-            use: [
-                // Creates `style` nodes from JS strings
-                'style-loader',
-                // Translates CSS into CommonJS
-                'css-loader',
-                // Compiles Sass to CSS
-                'sass-loader',
-            ],
-            },
-        ],
-    },
-    node: {
-        fs: 'empty'
-    }
-  };
+        filename: '[name].js',
+        path: path.resolve(__dirname+"/src/templates/public", 'dist'),
+      },
+  }
+  

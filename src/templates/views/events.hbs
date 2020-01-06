@@ -15,88 +15,82 @@
     <script src='fullcalendar/packages/interaction/main.js'></script>
     <script src='fullcalendar/packages/timegrid/main.js'></script>
     <script src='fullcalendar/packages/list/main.js'></script>
-    <script>       
-      
+    <script src='dist/main.js'></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    {{!-- <script type="text/babel" >
+        class Calendar extends React.Component {
+        calendarComponentRef = React.createRef();
 
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar-component');
+        state = {
+            calendarWeekends: true,
+            calendarEvents: [
+            // initial event data
+            { title: "Event Now", start: new Date() }
+            ]
+        };
 
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    plugins: [ 'dayGrid', 'interaction','timeGrid', 'list' ],
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    },
-    defaultDate: '2018-01-12',
-    navLinks: true, // can click day/week names to navigate views
-    editable: true,
-    eventLimit: true, // allow "more" link when too many events
-    events: [
-      {
-        title: 'All Day Event',
-        start: '2018-01-01',
-      },
-      {
-        title: 'Long Event',
-        start: '2018-01-07',
-        end: '2018-01-10'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2018-01-09T16:00:00'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2018-01-16T16:00:00'
-      },
-      {
-        title: 'Conference',
-        start: '2018-01-11',
-        end: '2018-01-13'
-      },
-      {
-        title: 'Meeting',
-        start: '2018-01-12T10:30:00',
-        end: '2018-01-12T12:30:00'
-      },
-      {
-        title: 'Lunch',
-        start: '2018-01-12T12:00:00'
-      },
-      {
-        title: 'Meeting',
-        start: '2018-01-12T14:30:00'
-      },
-      {
-        title: 'Happy Hour',
-        start: '2018-01-12T17:30:00'
-      },
-      {
-        title: 'Dinner',
-        start: '2018-01-12T20:00:00'
-      },
-      {
-        title: 'Birthday Party',
-        start: '2018-01-13T07:00:00'
-      },
-      {
-        title: 'Click for Google',
-        url: 'http://google.com/',
-        start: '2018-01-28'
-      }
-    ]
-  });
-  calendar.render();
-});
+        render() {
+            return (
+            <div className="demo-app">
+                <div className="demo-app-top">
+                <button onClick={this.toggleWeekends}>toggle weekends</button>
+                <button onClick={this.gotoPast}>go to a date in the past</button>
+                 (also, click a date/time to add an event)
+                </div>
+                <div className="demo-app-calendar">
+                <FullCalendar
+                    defaultView="dayGridMonth"
+                    header={{
+                    left: "prev,next today",
+                    center: "title",
+                    right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+                    }}
+                    plugins={[ 'darGrid', 'timeGrid', 'interaction']}
+                    ref={this.calendarComponentRef}
+                    weekends={this.state.calendarWeekends}
+                    events={this.state.calendarEvents}
+                    dateClick={this.handleDateClick}
+                />
+                </div>
+            </div>
+            );
+        }
 
-    </script>
+        toggleWeekends = () => {
+            this.setState({
+            // update a property
+            calendarWeekends: !this.state.calendarWeekends
+            });
+        };
+
+        gotoPast = () => {
+            let calendarApi = this.calendarComponentRef.current.getApi();
+            calendarApi.gotoDate("2020-01-01"); // call a method on the Calendar object
+        };
+
+        handleDateClick = arg => {
+            if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
+            this.setState({
+                // add new event data
+                calendarEvents: this.state.calendarEvents.concat({
+                // creates a new array
+                title: "New Event",
+                start: arg.date,
+                allDay: arg.allDay
+                })
+            });
+            }
+        };
+        }
+        let domContainer = document.querySelector('#calendar-component');
+        ReactDOM.render(<Calendar />, domContainer);
+    </script>  --}}
+
     <!-- Don't use this in production: -->
     {{!-- <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> --}}
     
-    <script type="text/babel" src = "src/index.jsx"></script>
+    
     <title>Event Page</title>
 </head>
 <body>
@@ -149,10 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
             {{/each}}
         </ul>
     </div>
-   
-    
     <div id = "calendar-component">
     </div>
-    
+    <script src='dist/main.js'></script>
 </body>
 

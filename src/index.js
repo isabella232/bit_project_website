@@ -8,7 +8,6 @@ const applicantsRouter = require('./routers/applicants')
 const appRouter = require('./routers/app')
 const hbs = require('hbs')
 const app = express()
-// const config = require('config') // TODO: check
 const port = process.env.PORT || 3000
 
 // Paths
