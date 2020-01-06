@@ -66,27 +66,6 @@ router.get('/event', async (req, res) => {
 	}
 })
 
-// Read SINGLE event
-// Silenced because it was being used before /events/:eventName
-// router.get('/events/:id', async (req, res) => { 
-//     const _id = req.params.id
-
-// 	try {
-// 		const event = await Event.findById(_id)
-
-// 		// if not found return 404 error
-// 		if (!event) { 
-// 			return res.status(404).send()
-// 		}
-
-// 		// if found send user
-// 		res.send(event)
-// 	//send 500 error if error
-// 	} catch(e) { 
-// 		res.status(500).send(e)
-// 	}
-// })
-
 // Delete Event
 router.delete('/events/:id', async (req, res) => {  
 	try {
