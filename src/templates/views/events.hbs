@@ -5,92 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="style.css" rel = "stlyesheet">
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <link href='fullcalendar/packages/core/main.css' rel="stylesheet" />
-    <link href='fullcalendar/packages/daygrid/main.css' rel="stylesheet"/>
-    <script src='fullcalendar/packages/core/main.js'></script>
-    <script src='fullcalendar/packages/daygrid/main.js'></script>
-    <script src='fullcalendar/packages/interaction/main.js'></script>
-    <script src='fullcalendar/packages/timegrid/main.js'></script>
-    <script src='fullcalendar/packages/list/main.js'></script>
     <script src='dist/main.js'></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    {{!-- <script type="text/babel" >
-        class Calendar extends React.Component {
-        calendarComponentRef = React.createRef();
-
-        state = {
-            calendarWeekends: true,
-            calendarEvents: [
-            // initial event data
-            { title: "Event Now", start: new Date() }
-            ]
-        };
-
-        render() {
-            return (
-            <div className="demo-app">
-                <div className="demo-app-top">
-                <button onClick={this.toggleWeekends}>toggle weekends</button>
-                <button onClick={this.gotoPast}>go to a date in the past</button>
-                 (also, click a date/time to add an event)
-                </div>
-                <div className="demo-app-calendar">
-                <FullCalendar
-                    defaultView="dayGridMonth"
-                    header={{
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
-                    }}
-                    plugins={[ 'darGrid', 'timeGrid', 'interaction']}
-                    ref={this.calendarComponentRef}
-                    weekends={this.state.calendarWeekends}
-                    events={this.state.calendarEvents}
-                    dateClick={this.handleDateClick}
-                />
-                </div>
-            </div>
-            );
-        }
-
-        toggleWeekends = () => {
-            this.setState({
-            // update a property
-            calendarWeekends: !this.state.calendarWeekends
-            });
-        };
-
-        gotoPast = () => {
-            let calendarApi = this.calendarComponentRef.current.getApi();
-            calendarApi.gotoDate("2020-01-01"); // call a method on the Calendar object
-        };
-
-        handleDateClick = arg => {
-            if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
-            this.setState({
-                // add new event data
-                calendarEvents: this.state.calendarEvents.concat({
-                // creates a new array
-                title: "New Event",
-                start: arg.date,
-                allDay: arg.allDay
-                })
-            });
-            }
-        };
-        }
-        let domContainer = document.querySelector('#calendar-component');
-        ReactDOM.render(<Calendar />, domContainer);
-    </script>  --}}
-
-    <!-- Don't use this in production: -->
-    {{!-- <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> --}}
-    
-    
     <title>Event Page</title>
 </head>
 <body>
@@ -103,7 +21,7 @@
             <li class="nav-style"><a href="index.html">Home</a></li>
         </ul>
     </header>
-    <img class = "header-image" src="./assets/volunteer.png" alt="">
+    <img class = "header-image" src="volunteer.png" alt="">
 
     <h1 class="main-title">Volunteer Event Page</h1>
     <div class="wrap">
@@ -113,8 +31,9 @@
                 <button class="searchButton">Q</button>
             </form>
         </div>
+        {{!-- <form action="/events" method="POST"> --}}
             <a href="create-event.html"><button type="submit" class="button">Create New Event</button></a>
-
+        {{!-- </form> --}}
     </div>
     <div class="events">
         <ul class="event-ul">
@@ -147,4 +66,4 @@
     </div>
     <script src='dist/main.js'></script>
 </body>
-
+</html>

@@ -14398,9 +14398,9 @@ document.addEventListener('DOMContentLoaded', function () {
       url: 'http://google.com/',
       start: '2020-01-28'
     }]
-  }); // calendar.render();
-}); // let domContainer = document.querySelector('#calendar-component');
-// ReactDOM.render(<Calendar />, domContainer);
+  });
+  calendar.render();
+});
 
 /***/ })
 
