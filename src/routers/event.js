@@ -65,7 +65,7 @@ router.get('/event', async (req, res) => {
 		res.status(500).send()
 	}
 })
-
+ 
 // Delete Event
 router.delete('/events/:id', async (req, res) => {  
 	try {
