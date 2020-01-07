@@ -58,7 +58,9 @@ router.get('/event', async (req, res) => {
 			})
 		//no filter present
 		} else { 
-			const events = await Event.find()
+			const events = await Event.find({})
+			
+			console.log(events);
 			res.send(events)
 		}
 	} catch (e) { 
