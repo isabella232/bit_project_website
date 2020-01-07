@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes to add event
 router.post('/events', async (req, res) =>{
     const event = new Event(req.body)
-	console.log(event);
 	event.href = "/events/" + event.eventName
     try { 
     	await event.save()
@@ -29,7 +28,6 @@ router.post('/events', async (req, res) =>{
 router.get('/events', async (req, res) => { 
 	try { 
 		const events = await Event.find({})
-		console.log("render events page")
 		// Render "events.hbs" with const events
 		res.render('events', {
 			events: events
@@ -60,35 +58,16 @@ router.get('/event', async (req, res) => {
 			})
 		//no filter present
 		} else { 
-			const events = await Event.find()
+			const events = await Event.find({})
+			
+			console.log(events);
 			res.send(events)
 		}
 	} catch (e) { 
 		res.status(500).send()
 	}
 })
-
-// Read SINGLE event
-// Silenced because it was being used before /events/:eventName
-// router.get('/events/:id', async (req, res) => { 
-//     const _id = req.params.id
-
-// 	try {
-// 		const event = await Event.findById(_id)
-
-// 		// if not found return 404 error
-// 		if (!event) { 
-// 			return res.status(404).send()
-// 		}
-
-// 		// if found send user
-// 		res.send(event)
-// 	//send 500 error if error
-// 	} catch(e) { 
-// 		res.status(500).send(e)
-// 	}
-// })
-
+ 
 // Delete Event
 router.delete('/events/:id', async (req, res) => {  
 	try {

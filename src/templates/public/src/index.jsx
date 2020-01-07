@@ -6,73 +6,32 @@ import listPlugin from '@fullcalendar/list';
 
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar-component');
-  var calendar = new Calendar(calendarEl, {
-    plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    },
-    defaultDate: '2020-01-01',
-    navLinks: true, // can click day/week names to navigate views
-    editable: true,
-    eventLimit: true, // allow "more" link when too many events
-    events: [
-      {
-        title: 'All Day Event',
-        start: '2020-01-01',
-      },
-      {
-        title: 'Long Event',
-        start: '2020-01-07',
-        end: '2020-01-10'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2020-01-09T16:00:00'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2020-01-16T16:00:00'
-      },
-      {
-        title: 'Conference',
-        start: '2018-01-11',
-        end: '2020-01-13'
-      },
-      {
-        title: 'Meeting',
-        start: '2020-01-12T10:30:00',
-        end: '2020-01-12T12:30:00'
-      },
-      {
-        title: 'Lunch',
-        start: '2020-01-12T12:00:00'
-      },
-      {
-        title: 'Meeting',
-        start: '2020-01-12T14:30:00'
-      },
-      {
-        title: 'Happy Hour',
-        start: '2020-01-12T17:30:00'
-      },
-      {
-        title: 'Dinner',
-        start: '2020-01-12T20:00:00'
-      },
-      {
-        title: 'Birthday Party',
-        start: '2020-01-13T07:00:00'
-      },
-      {
-        title: 'Click for Google',
-        url: 'http://google.com/',
-        start: '2020-01-28'
+  fetch('/event').then(function(response) {
+    response.json().then(function(text) {
+      for (var i = 0; i < text.length; i++) {
+        text[i]['title'] = text[i].eventName;
+        var date = new Date(text[i].date);
+        date.setHours(parseInt(text[i].time.slice(0,2),10),parseInt(text[i].time.slice(3,5),10));
+        text[i]['start'] = date.toISOString();
+        console.log(date.toISOString())
+        var calendar = new Calendar(calendarEl, {
+          plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          },
+          minTime: '7:00:00',
+          maxTime: '20:00:00',
+          defaultDate: '2020-01-01',
+          navLinks: true, // can click day/week names to navigate views
+          editable: true,
+          eventLimit: true, // allow "more" link when too many events
+          events: text
+        });
+        calendar.render();
       }
-    ]
+    });
   });
-  calendar.render();
+  
 });
