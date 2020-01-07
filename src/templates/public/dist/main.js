@@ -14344,31 +14344,38 @@ document.addEventListener('DOMContentLoaded', function () {
   var calendarEl = document.getElementById('calendar-component');
   fetch('/event').then(function (response) {
     response.json().then(function (text) {
+      var events = [];
+
       for (var i = 0; i < text.length; i++) {
-        text[i]['title'] = text[i].eventName;
         var date = new Date(text[i].date);
         date.setHours(parseInt(text[i].time.slice(0, 2), 10), parseInt(text[i].time.slice(3, 5), 10));
-        text[i]['start'] = date.toISOString();
-        console.log(date.toISOString());
-        var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
-          plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__["default"]],
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-          },
-          minTime: '7:00:00',
-          maxTime: '20:00:00',
-          defaultDate: '2020-01-01',
-          navLinks: true,
-          // can click day/week names to navigate views
-          editable: true,
-          eventLimit: true,
-          // allow "more" link when too many events
-          events: text
+        events.push({
+          "title": text[i].eventName,
+          "start": date.toISOString()
         });
-        calendar.render();
       }
+
+      console.log(events);
+      var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
+        plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__["default"]],
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        minTime: '7:00:00',
+        maxTime: '20:00:00',
+        defaultDate: '2020-01-01',
+        navLinks: true,
+        // can click day/week names to navigate views
+        editable: true,
+        eventLimit: true,
+        // allow "more" link when too many events
+        events: {
+          events: events
+        }
+      });
+      calendar.render();
     });
   });
 });

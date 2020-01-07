@@ -8,12 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar-component');
   fetch('/event').then(function(response) {
     response.json().then(function(text) {
+        var events = [];     
+
         for (var i = 0; i < text.length; i++) {
-          text[i]['title'] = text[i].eventName;
-          var date = new Date(text[i].date);
+          var date = new Date(text[i].date);          
           date.setHours(parseInt(text[i].time.slice(0,2),10),parseInt(text[i].time.slice(3,5),10));
-          text[i]['start'] = date.toISOString();
-          console.log(date.toISOString())
+          events.push({
+            "title":  text[i].eventName,
+            "start": date.toISOString(),
+          });
+        }
+        console.log(events)
         var calendar = new Calendar(calendarEl, {
           plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
           header: {
@@ -27,10 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
           navLinks: true, // can click day/week names to navigate views
           editable: true,
           eventLimit: true, // allow "more" link when too many events
-          events: text
+          events: {events}
         });
         calendar.render();
-      }
+      
     });
   });
   
