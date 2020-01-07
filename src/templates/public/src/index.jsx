@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar-component');
   fetch('/event').then(function(response) {
     response.json().then(function(text) {
-      for (var i = 0; i < text.length; i++) {
-        text[i]['title'] = text[i].eventName;
-        var date = new Date(text[i].date);
-        date.setHours(parseInt(text[i].time.slice(0,2),10),parseInt(text[i].time.slice(3,5),10));
-        text[i]['start'] = date.toISOString();
-        console.log(date.toISOString())
+        for (var i = 0; i < text.length; i++) {
+          text[i]['title'] = text[i].eventName;
+          var date = new Date(text[i].date);
+          date.setHours(parseInt(text[i].time.slice(0,2),10),parseInt(text[i].time.slice(3,5),10));
+          text[i]['start'] = date.toISOString();
+          console.log(date.toISOString())
         var calendar = new Calendar(calendarEl, {
           plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
           header: {
