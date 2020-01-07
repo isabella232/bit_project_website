@@ -14349,6 +14349,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var date = new Date(text[i].date);
         date.setHours(parseInt(text[i].time.slice(0, 2), 10), parseInt(text[i].time.slice(3, 5), 10));
         text[i]['start'] = date.toISOString();
+        console.log(date.toISOString());
         var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
           plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__["default"]],
           header: {

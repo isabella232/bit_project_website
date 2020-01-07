@@ -164,9 +164,9 @@ body {
   }
   
 
-/* .event-description {
+ .event-description {
     margin: 0;
-} */  border-radius: 25px;
+      border-radius: 25px;
       background-color: lightblue;          
       width: 500px;
   }
