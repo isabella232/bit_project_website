@@ -15,14 +15,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes to add event
 router.post('/events', async (req, res) =>{
     const event = new Event(req.body)
+	event.href = "/events/view?eventName=" + event.eventName
 	console.log(event);
-	event.href = "/events/" + event.eventName
     try { 
     	await event.save()
     	res.status(201).redirect('/events')
     } catch(e) {
         res.status(400).send(e)
     }
+})
+
+// Routes to singular event view
+router.get('/events/view', async (req, res) => { 
+	console.log('req.query.eventName=' + req.query.eventName)
+	try { 
+		if (req.query.eventName) { 
+			const events = await Event.find({"eventName":req.query.eventName})
+			res.render('view', {
+				events: events
+			})
+		}
+		else { 
+			console.log('redirecting, no event specified')
+			//res.status(201).redirect('/events')
+		}
+	} catch (e) { 
+		res.status(500).send(e)
+	}
 })
 
 // Routes to Events Browsing Page
@@ -47,19 +66,14 @@ router.get('/event', async (req, res) => {
 	var query = {}
 	// TODO: Link search bar button to actually retrive it upon searching
 	try { 
-		console.log(req.query);
-		// const event = await Event.findOne({eventName:"Turkey Trot"})
-		// if filter is present
-		console.log(req.query.eventName);
 		if (req.query.eventName) { 
 			query.eventName = req.query.eventName
 			const events = await Event.find({"eventName":query.eventName})
-			console.log(events);
 			res.render('events', {
 				events: events
 			})
-		//no filter present
 		} else { 
+			console.log('sending all events')
 			const events = await Event.find()
 			res.send(events)
 		}
@@ -68,11 +82,12 @@ router.get('/event', async (req, res) => {
 	}
 })
 
-// Read SINGLE event
+// TODO: Read SINGLE event
 // Silenced because it was being used before /events/:eventName
-// router.get('/events/:id', async (req, res) => { 
+// router.get('/event/:id', async (req, res) => { 
 //     const _id = req.params.id
 
+//     console.log(_id)
 // 	try {
 // 		const event = await Event.findById(_id)
 
@@ -89,12 +104,16 @@ router.get('/event', async (req, res) => {
 // 	}
 // })
 
-// Delete Event
-router.delete('/events/:id', async (req, res) => {  
+// TODO: Delete Event
+router.delete('/event', async (req, res) => {  
 	try {
+		const _id = "5e15245a5df7d716144a41c7"
+		//const _id = req.params.id.
+		console.log(req.params.id)
+		console.log(_id)
 		// try to delete Event, if found store in Event 
-		const event = await Event.findByIdAndDelete(req.params.id)
-		
+		const event = await Event.findByIdAndDelete(_id)
+		console.log(event)
 		// if not found return 404 error
 		if (!event) { 
 			return res.status(404).send()
