@@ -26,17 +26,22 @@ router.post('/events', async (req, res) =>{
 
 // Routes to singular event view
 router.get('/events/view', async (req, res) => { 
-	console.log('req.query.eventName=' + req.query.eventName)
 	try { 
 		if (req.query.eventName) { 
 			const events = await Event.find({"eventName":req.query.eventName})
+			console.log(events[0])
+			console.log(events.eventName)
 			res.render('view', {
-				events: events
+				eventName: events[0].eventName,
+				month: events[0].month,
+				day: events[0].day,
+				time: events[0].time,
+				description: events[0].description
 			})
 		}
 		else { 
 			console.log('redirecting, no event specified')
-			//res.status(201).redirect('/events')
+			res.status(201).redirect('/events')
 		}
 	} catch (e) { 
 		res.status(500).send(e)
