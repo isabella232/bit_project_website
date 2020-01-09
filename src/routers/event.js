@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 router.post('/events', async (req, res) =>{
     const event = new Event(req.body)
 	event.href = "/events/view?eventName=" + event.eventName
-	console.log(event);
     try { 
     	await event.save()
     	res.status(201).redirect('/events')
@@ -48,7 +47,6 @@ router.get('/events/view', async (req, res) => {
 router.get('/events', async (req, res) => { 
 	try { 
 		const events = await Event.find({})
-		console.log("render events page")
 		// Render "events.hbs" with const events
 		res.render('events', {
 			events: events
@@ -74,13 +72,14 @@ router.get('/event', async (req, res) => {
 			})
 		} else { 
 			console.log('sending all events')
-			const events = await Event.find()
+			const events = await Event.find({})
 			res.send(events)
 		}
 	} catch (e) { 
 		res.status(500).send()
 	}
 })
+
 
 // TODO: Read SINGLE event
 // Silenced because it was being used before /events/:eventName
@@ -103,9 +102,9 @@ router.get('/event', async (req, res) => {
 // 		res.status(500).send(e)
 // 	}
 // })
-
+ 
 // TODO: Delete Event
-router.delete('/event', async (req, res) => {  
+router.delete('/events/:id', async (req, res) => {  
 	try {
 		const _id = "5e15245a5df7d716144a41c7"
 		//const _id = req.params.id.

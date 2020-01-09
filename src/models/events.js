@@ -14,9 +14,9 @@ const Event = mongoose.model('Event', {
         trim: true,
     },
     date: {
-        type: String,
+        type: Date,
         required: true,
-        trim: true
+        min: new Date()
     },
     month: {
         type: String,
