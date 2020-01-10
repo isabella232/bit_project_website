@@ -14342,43 +14342,68 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', function () {
   var calendarEl = document.getElementById('calendar-component');
-  fetch('/event').then(function (response) {
-    response.json().then(function (text) {
-      var events = [];
 
-      for (var i = 0; i < text.length; i++) {
-        var date = new Date(text[i].date);
-        date.setHours(parseInt(text[i].time.slice(0, 2), 10), parseInt(text[i].time.slice(3, 5), 10));
-        events.push({
-          "title": text[i].eventName,
-          "start": date.toISOString()
-        });
-      }
+  if (calendarEl) {
+    fetch('/event').then(function (response) {
+      response.json().then(function (text) {
+        var events = [];
 
-      console.log(events);
-      var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
-        plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__["default"]],
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        minTime: '7:00:00',
-        maxTime: '20:00:00',
-        defaultDate: '2020-01-01',
-        navLinks: true,
-        // can click day/week names to navigate views
-        editable: true,
-        eventLimit: true,
-        // allow "more" link when too many events
-        events: {
-          events: events
+        for (var i = 0; i < text.length; i++) {
+          var date = new Date(text[i].date);
+          date.setHours(parseInt(text[i].time.slice(0, 2), 10), parseInt(text[i].time.slice(3, 5), 10));
+          events.push({
+            "title": text[i].eventName,
+            "start": date.toISOString()
+          });
         }
+
+        var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
+          plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__["default"]],
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          },
+          minTime: '7:00:00',
+          maxTime: '20:00:00',
+          defaultDate: '2020-01-01',
+          navLinks: true,
+          // can click day/week names to navigate views
+          editable: true,
+          eventLimit: true,
+          // allow "more" link when too many events
+          events: {
+            events: events
+          }
+        });
+        calendar.render();
       });
-      calendar.render();
     });
-  });
+  }
 });
+var navBar = React.createElement("ul", {
+  className: "header"
+}, React.createElement("img", {
+  src: "//static1.squarespace.com/static/5cb55271b914494e48f5546b/t/5d22449b59005400016749ca/1575162183637/?format=1500w",
+  alt: "bit project",
+  className: "Header-branding-logo"
+}), React.createElement("li", {
+  className: "nav-style"
+}, React.createElement("a", {
+  href: "contact.html"
+}, "Contact")), React.createElement("li", {
+  className: "nav-style"
+}, React.createElement("a", {
+  href: "Login.html"
+}, "Log in")), React.createElement("li", {
+  className: "nav-style"
+}, React.createElement("a", {
+  href: "/events"
+}, "Events")), React.createElement("li", {
+  className: "nav-style"
+}, React.createElement("a", {
+  href: "index.html"
+}, "Home"))); //ReactDOM.render(navBar, document.getElementsByTagName("header")[0]);
 
 /***/ })
 

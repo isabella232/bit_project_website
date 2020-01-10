@@ -20,20 +20,11 @@
     <script src='fullcalendar/packages/timegrid/main.js'></script>
     <script src='fullcalendar/packages/list/main.js'></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-   
-
     <title>Event Page</title>
 </head>
+
 <body>
-    <header>
-        <ul class="nav-list">
-            <img src="//static1.squarespace.com/static/5cb55271b914494e48f5546b/t/5d22449b59005400016749ca/1575162183637/?format=1500w" alt="bit project" class="Header-branding-logo">
-            <li class="nav-style"><a href="contact.html">Contact</a></li>
-            <li class="nav-style"><a href="Login.html">Log in</a></li>
-            <li class="nav-style"><a href="/events">Events</a></li>
-            <li class="nav-style"><a href="index.html">Home</a></li>
-        </ul>
-    </header>
+     {{>header}} 
     <img class = "header-image" src="volunteer.png" alt="">
 
     <h1 class="main-title">Volunteer Event Page</h1>
@@ -75,6 +66,6 @@
     </div>
     <div id = "calendar-component">
     </div>
-    <script src='dist/main.js'></script>
+    {{!-- <script src='dist/main.js'></script> --}}
 </body>
 </html>

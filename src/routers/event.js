@@ -1,6 +1,5 @@
 
 const express = require('express')
-const path = require('path')
 require('../db/mongoose')
 const Event = require('../models/events')
 const router = new express.Router()
@@ -29,9 +28,20 @@ router.get('/events', async (req, res) => {
 	try { 
 		const events = await Event.find({})
 		// Render "events.hbs" with const events
-		res.render('events', {
-			events: events
-		})
+		if(req.cookies.auth){	
+			res.render('profile',{
+				profile: "Profile",
+				profileLink: "/profile",
+				events: events
+			})
+		}
+		else{
+			res.render('profile',{
+				profile: "Login",
+				profileLink: "/login",
+				events: events
+			})
+		}
 	} catch (e) { 
 		res.status(500).send(e)
 	}
@@ -43,6 +53,7 @@ router.get('/events', async (req, res) => {
 router.get('/event', async (req, res) => { 
 	//Create variable to store filter
 	var query = {}
+	console.log()
 	// TODO: Link search bar button to actually retrive it upon searching
 	try { 
 		console.log(req.query);

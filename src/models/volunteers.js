@@ -107,6 +107,7 @@ VolunteerSchema.methods.generateAuthToken = async function () {
 
 VolunteerSchema.statics.findByCredentials = async (email, password) => {
     console.log('Credential')
+    console.log(email)
     const volunteer = await Volunteer.findOne({ email })
     console.log(volunteer)
     if (!volunteer) {

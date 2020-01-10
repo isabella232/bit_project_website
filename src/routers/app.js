@@ -2,7 +2,7 @@ const path = require('path')
 const express = require('express');
 require('../db/mongoose')
 const Event = require('../models/events')
-const hbs = require('hbs')
+const auth = require('../middleware/auth')
 const router = express();
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -15,15 +15,26 @@ router.set('view engine', 'hbs')
 router.set('views', viewsPath)
 
 
-router.get('', (req, res) => {
-	router.render('index')
+router.get('',auth, (req, res) => {
+	console.log("index");
+	console.log(req.volunteer);
+	if(req.cookies.auth){	
+		res.render('index',{
+			profile: "Profile",
+			profileLink: "/profile"
+		})
+	}
+	else{
+		res.render('profile',{
+			profile: "Login",
+			profileLink: "/login"
+		})
+	}
 })
-
 
 router.get('/events/:eventName', async (req, res) => {
 	var name = req.params.eventName
 	var eventPath = "/events/" + req.params.eventName
-	console.log(eventPath);
 	try {
 		const event = await Event.findOne({href: eventPath})
 		res.render(name, {
@@ -44,15 +55,41 @@ router.get('/events/:eventName', async (req, res) => {
 
 
 router.get('/home', (req, res) => {
-	router.render('home')
+	if(req.cookies.auth){	
+		res.render('index',{
+			profile: "Profile",
+			profileLink: "/profile"
+		})
+	}
+	else{
+		res.render('index',{
+			profile: "Login",
+			profileLink: "/login"
+		})
+	}
 })
 
-router.get('/profiles', (req,res) => { 
-	router.render('profile')
+router.get('/profile', auth, (req,res) => { 
+	console.log(req.cookies.auth)
+	if(req.cookies.auth){	
+		res.render('profile',{
+			profile: "Profile",
+			profileLink: "/profile"
+		})
+	}
+	else{
+		res.render('profile',{
+			profile: "Login",
+			profileLink: "/login"
+		})
+	}
 })
 
 router.get('/login', (req,res) => { 
-	router.render('Login.html')
+	res.render('login',{
+		profile: "Login",
+		profileLink: "/login"
+	})
 })
 
 router.get('/contactus', (req,res) => { 
