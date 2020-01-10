@@ -53,14 +53,14 @@ router.get('/events', async (req, res) => {
 		const events = await Event.find({})
 		// Render "events.hbs" with const events
 		if(req.cookies.auth){	
-			res.render('profile',{
+			res.render('events',{
 				profile: "Profile",
 				profileLink: "/profile",
 				events: events
 			})
 		}
 		else{
-			res.render('profile',{
+			res.render('events',{
 				profile: "Login",
 				profileLink: "/login",
 				events: events
