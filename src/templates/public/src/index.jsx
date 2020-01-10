@@ -3,6 +3,9 @@ import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import Chat from './chatroom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -35,11 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
             events: {events}
           });
           calendar.render();
-        
       });
     });
   }
-  
 });
 
 const navBar = (
@@ -52,3 +53,5 @@ const navBar = (
   </ul>
 );
 //ReactDOM.render(navBar, document.getElementsByTagName("header")[0]);
+console.log("index")
+ReactDOM.render(<Chat />, document.getElementById('chat'));
