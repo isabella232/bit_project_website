@@ -49,6 +49,8 @@ router.get('/events/view', async (req, res) => {
 router.get('/events', async (req, res) => { 
 	try { 
 		const events = await Event.find({})
+		console.log(events)
+		console.log("render events page")
 		// Render "events.hbs" with const events
 		if(req.cookies.auth){	
 			res.render('events',{
