@@ -4,7 +4,6 @@ require('../db/mongoose')
 const Volunteer = require('../models/volunteers')
 const router = new express.Router()
 const auth = require('../middleware/auth')
-
 app = express()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
@@ -13,9 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Add Volunteer
 
 router.post('/volunteers', async (req, res) => {
-	console.log(req.body);
 	const volunteer = new Volunteer(req.body)
-
 	try {
 		await volunteer.save()
 		res.status(201).redirect("Login.html")
@@ -41,21 +38,22 @@ router.post('/volunteers/login', async (req, res) => {
 	try {
 		const volunteer = await Volunteer.findByCredentials(req.body.email, req.body.password)
 		const token = await volunteer.generateAuthToken()
-		res.status(201).send({ volunteer, token })
+		res.cookie('auth', 'Bearer ' + token, { httpOnly: true })
+		res.redirect('/profile')
 	} catch (e) {
+		console.log(e)
 		res.status(400).send()
 	}
 })
 
 
-router.post('/volunteers/logout', auth, async (req, res) => {
+router.get('/logout', auth, async (req, res) => {
     try {
         req.volunteer.tokens = req.volunteer.tokens.filter((token) => {
             return token.token !== req.token
         })
         await req.volunteer.save()
-
-        res.send()
+        res.status(201).redirect("/home")
     } catch (e) {
 		console.log(e)
         res.status(500).send()
@@ -67,11 +65,9 @@ router.patch('/volunteers/:id', async (req, res) => {
 	const updates = Object.keys(req.body)
 	const allowedUpdates = ['firstName', 'lastName', 'age', 'email', 'password', 'eventCount']
 	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
 	if (!isValidOperation) {
 		return res.status(400).send({ error: 'Invalid update' })
 	}
-
 	try {
 		const volunteer = await Volunteer.findById(req.params.id)
 		updates.forEach((update) => volunteer[update] = req.body[update])
@@ -87,7 +83,13 @@ router.patch('/volunteers/:id', async (req, res) => {
 
 
 router.get('/volunteers/profile', auth, async (req, res) => { 
-	res.send(req.volunteer) 
+	console.log("profile")
+	console.log(req.cookies)
+	res.render('profile',
+	{
+		profile: "profile",
+		profileLink: "/profile"
+	})
 })
 
 // Read a single volunteer (login a person) by cross checking email/password
@@ -98,7 +100,7 @@ router.get('/volunteers/:email', async (req, res) => {
 		const volunteers = await Volunteer.findOne(email)
 
 		// if not found return 404 error
-		if (!volunteer) {
+		if (!volunteers) {
 			return res.status(404).send()
 		}
 

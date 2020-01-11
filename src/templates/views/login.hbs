@@ -11,14 +11,7 @@
     <title>Document</title>
 </head>
 <body>
-<ul class="nav-list">
-        <img src="//static1.squarespace.com/static/5cb55271b914494e48f5546b/t/5d22449b59005400016749ca/1575162183637/?format=1500w" alt="bit project" class="Header-branding-logo">
-        <li class="nav-style"><a href="contact.html">Contact</a></li>
-        <li class="nav-style"><a href="Login.html">Log in</a></li>
-        <li class="nav-style"><a href="/events"> Events</a></li>
-        <li class="nav-style"><a href="index.html">Home</a></li>
-    </ul>
-
+{{>header}} 
 
 
 <div class="wrapper fadeInDown">
@@ -31,9 +24,9 @@
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+    <form action="/volunteers/login" method="POST">
+      <input type="text" id="login" class="fadeIn second" name="email" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
