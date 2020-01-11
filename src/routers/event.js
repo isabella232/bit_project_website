@@ -28,8 +28,6 @@ router.get('/events/view', async (req, res) => {
 	try { 
 		if (req.query.eventName) { 
 			const events = await Event.find({"eventName":req.query.eventName})
-			console.log(events[0])
-			console.log(events.eventName)
 			res.render('view', {
 				eventName: events[0].eventName,
 				month: events[0].month,
@@ -73,7 +71,7 @@ router.get('/events', async (req, res) => {
 
 
 // Read ALL events
-// Added functionality, if url has eventName search parameter, fitlers for that event name
+// Added functionality, if url has eventName search parameter, filters for that event name
 router.get('/event', async (req, res) => { 
 	//Create variable to store filter
 	var query = {}
@@ -96,6 +94,60 @@ router.get('/event', async (req, res) => {
 	}
 })
 
+//TODO: Manage Volunteers
+router.get('/events/manage', async(req,res) => { 
+	const updates = Object.keys(req.body) //Not sure what this does
+	const allowedUpdates = [''] // should be just 'volunteers' and 'events'
+	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+	if (!isValidOperation) { 
+		return res.status(400).send({error: 'Invalid update'})
+	}
+
+	try { 
+		if ((req.cookies.auth) && (req.query.eventName)) { 
+			const event = await Event.find({"eventName":req.query.eventName})
+			res.render('manage', {
+				eventName: events[0].eventName,
+				month: events[0].month,
+				day: events[0].day,
+				time: events[0].time,
+				description: events[0].description
+				// user text: event[0].text
+				volunteers: events[0].volunteers
+			})
+		} else { 
+			//Reroute to login page
+		}
+	} catch (e) { 
+		res.status(500).send(e)
+	}
+})
+
+//Commmented the below out because we're not using them and they don't seem to work anyways
+
+// TODO: Update Event
+// router.patch('/events/:id', async (req, res) => { 
+// 	const updates = Object.keys(req.body) 
+// 	const allowedUpdates = ['firstName', 'lastName', 'age', 'email', 'password','eventCount', 'isCoordinator','assignedToEvent']
+// 	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+// 	if (!isValidOperation) { 
+// 		return res.status(400).send({error: 'Invalid update'})
+// 	}
+
+// 	try { 
+// 		//spot to fix
+// 		const Admin = await Admin.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
+// 		//spot to fix findByIdAndUpdate({_id: req.params.id }, req.body, { new: true, runValidators: true})
+// 		if (!Admin) { 
+// 			return res.status(404).send()
+// 		}
+
+// 		res.send(Admin)
+// 	} catch (e) {  
+// 		res.status(400).send()
+// 	}
+// })
 
 // TODO: Read SINGLE event
 // Silenced because it was being used before /events/:eventName
@@ -120,54 +172,28 @@ router.get('/event', async (req, res) => {
 // })
  
 // TODO: Delete Event
-router.delete('/events/:id', async (req, res) => {  
-	try {
-		const _id = "5e15245a5df7d716144a41c7"
-		//const _id = req.params.id.
-		console.log(req.params.id)
-		console.log(_id)
-		// try to delete Event, if found store in Event 
-		const event = await Event.findByIdAndDelete(_id)
-		console.log(event)
-		// if not found return 404 error
-		if (!event) { 
-			return res.status(404).send()
-		}
+// router.delete('/events/:id', async (req, res) => {  
+// 	try {
+// 		const _id = "5e15245a5df7d716144a41c7"
+// 		//const _id = req.params.id.
+// 		console.log(req.params.id)
+// 		console.log(_id)
+// 		// try to delete Event, if found store in Event 
+// 		const event = await Event.findByIdAndDelete(_id)
+// 		console.log(event)
+// 		// if not found return 404 error
+// 		if (!event) { 
+// 			return res.status(404).send()
+// 		}
 
-		// if found send user
-		res.send(event)
-	//send 500 error if error
-	} catch(e) { 
-		res.status(500).send()
-	}
-})
+// 		// if found send user
+// 		res.send(event)
+// 	//send 500 error if error
+// 	} catch(e) { 
+// 		res.status(500).send()
+// 	}
+// })
 
-
-
-// TODO: Update Event
-router.patch('/events/:id', async (req, res) => { 
-	const updates = Object.keys(req.body) 
-	const allowedUpdates = ['firstName', 'lastName', 'age', 'email', 'password','eventCount', 'isCoordinator','assignedToEvent']
-	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
-	if (!isValidOperation) { 
-		return res.status(400).send({error: 'Invalid update'})
-	}
-
-
-	try { 
-		//spot to fix
-		const Admin = await Admin.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
-		//spot to fix findByIdAndUpdate({_id: req.params.id }, req.body, { new: true, runValidators: true})
-		if (!Admin) { 
-			return res.status(404).send()
-		}
-
-		res.send(Admin)
-	} catch (e) {  
-		res.status(400).send()
-	}
-})
 
 // Export Admin router
 module.exports = router

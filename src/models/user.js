@@ -3,8 +3,18 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const VolunteerSchema = new mongoose.Schema({
-    firstName: {
+const UserSchema = new mongoose.Schema({
+	userType: { 
+		type: String, 
+		required: true,
+		trim: true,
+		validate(value) {
+			if ((value != 'administrator') or (value != 'volunteer')) {
+				throw new Error('Incorrect User Type')
+			}
+		}
+	}, 
+	firstName: {
         type: String,
         required: true,
         trim: true,
@@ -47,15 +57,21 @@ const VolunteerSchema = new mongoose.Schema({
             }
         }
     },
-    eventCount: {
-        type: Number,
-        default: 0
-    },
+    text: {
+        type: String, 
+        default: 'login to sign up for event',
+    }
     tokens: [{
         token: {
             type: String, required: true
         }
     }]
+})
+
+VolunteerSchema.virtual('events', {
+    ref: 'Event',
+    localField: '_id',
+    foreignField: 'users'
 })
 
 // TEST CASES:
@@ -92,38 +108,38 @@ const v4 = {
     "email": "  wstein@super.com    ",
     "password": "123sugarr"
 }
-VolunteerSchema.methods.generateAuthToken = async function () {
+UserSchema.methods.generateAuthToken = async function () {
     console.log("generate")
-    const volunteer = this
+    const user = this
     const token = jwt.sign({ 
-        _id: volunteer._id.toString()
+        _id: user._id.toString()
     }, 'thisismysecret')
 
-    volunteer.tokens = volunteer.tokens.concat({ token })     
-    await volunteer.save()
+    user.tokens = user.tokens.concat({ token })     
+    await user.save()
 
     return token
 }
 
-VolunteerSchema.statics.findByCredentials = async (email, password) => {
+UserSchema.statics.findByCredentials = async (email, password) => {
     console.log('Credential')
     console.log(email)
-    const volunteer = await Volunteer.findOne({ email })
-    console.log(volunteer)
-    if (!volunteer) {
+    const user = await Volunteer.findOne({ email })
+    console.log(user)
+    if (!user) {
         throw new Error('Unable to login')
     }
-    const isMatch = await bcrypt.compare(password, volunteer.password)
+    const isMatch = await bcrypt.compare(password, user.password)
     console.log(isMatch)
     if (!isMatch) {
         throw new Error('Unable to login')
     }
 
-    return volunteer
+    return user
 }
 
 
-VolunteerSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function (next) {
     const user = this
 
     if (user.isModified('password')) {
@@ -134,7 +150,7 @@ VolunteerSchema.pre('save', async function (next) {
     next()
 })
 
-const Volunteer = mongoose.model('Volunteer', VolunteerSchema)
+const User = mongoose.model('User', UserSchema)
 
 
-module.exports = Volunteer
+module.exports = User

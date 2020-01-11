@@ -42,9 +42,9 @@ const Event = mongoose.model('Event', {
         required: true,
         trim: true
     },
-    attendeeCount: {
-        type: Number,
-        default: 0
+    volunteers: { 
+        type: array[mongoose.Schema.Types.ObjectID],
+        ref: 'users'
     },
     href: {
         type: String,

@@ -37,9 +37,15 @@
         </div>
         <a href="create-event.html"><button type="submit" class="button">Create New Event</button></a>
     </div>
+
     <div class="events">
         <ul class="event-ul">
             {{#each events}}
+                <!-- TODO: Manage Volunteers for coordinators, Sign up for Event for volunteers, Login otherwise -->
+                <form action="{{{this.manageHREF}}}" method="get">
+                    <input type="hidden" name="eventName" value="{{{this.eventName}}}">
+                    <button type="submit">{{{this.text}}}</button> 
+                </form>
                 <form action="{{{this.href}}}" method="GET">
                     <input type="hidden" name="eventName" value="{{{this.eventName}}}">
                     <button type="submit">
