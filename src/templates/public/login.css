@@ -45,6 +45,13 @@
   border-radius: 25px;
 }
 
+.header {
+  padding-top: 30px;
+  font-size: 30px;
+  color: grey;
+  font-style: italic;
+}
+
 html {
   background-color: #56baed;
 }
