@@ -19,3 +19,7 @@ img{
 .table-responsive{
     
 }
+
+.table table-sm table-hover{
+    display: inline-flex;
+}
