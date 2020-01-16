@@ -7,8 +7,37 @@ import Chat from './chatroom';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-document.addEventListener('DOMContentLoaded', function() {
+function Example() {
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+}
+
+document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar-component');
   if (calendarEl){
     fetch('/event').then(function(response) {
@@ -35,7 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
             navLinks: true, // can click day/week names to navigate views
             editable: true,
             eventLimit: true, // allow "more" link when too many events
-            events: {events}
+            events: {events},
+            eventClick: function(info) {  
+              ReactDOM.render(<Example />,  document.getElementById('modal-event'));
+            }
           });
           calendar.render();
       });

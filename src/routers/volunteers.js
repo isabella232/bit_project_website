@@ -39,6 +39,7 @@ router.post('/volunteers/login', async (req, res) => {
 		const volunteer = await Volunteer.findByCredentials(req.body.email, req.body.password)
 		const token = await volunteer.generateAuthToken()
 		res.cookie('auth', 'Bearer ' + token, { httpOnly: true })
+		console.log(res.cookies)
 		res.redirect('/profile')
 	} catch (e) {
 		console.log(e)
