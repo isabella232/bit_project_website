@@ -1,18 +1,22 @@
 
 const express = require('express')
 require('../db/mongoose')
-const Volunteer = require('../models/volunteers')
+const User = require('../models/user')
 const router = new express.Router()
 const auth = require('../middleware/auth')
 app = express()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// REST APIs
-// Add Volunteer
 
+// TODO: DO WE USE THIS page
+// REST APIs
+
+// Add Volunteer
 router.post('/volunteers', async (req, res) => {
-	const volunteer = new Volunteer(req.body)
+	console.log(req.body)
+	const volunteer = new User(req.body)
+	console.log(volunteer)
 	try {
 		await volunteer.save()
 		res.status(201).redirect("Login.html")
@@ -22,38 +26,40 @@ router.post('/volunteers', async (req, res) => {
 	}
 })
 
-// Read ALL volunteers
+// Read ALL Volunteers
 router.get('/volunteers', async (req, res) => {
 	try {
-		const volunteers = await Volunteer.find({})
+		const volunteers = await User.find({})
 		res.send(volunteers)
 	} catch (e) {
 		res.status(500).send()
 	}
 })
 
-
+// Login Page for Volunteers
 router.post('/volunteers/login', async (req, res) => {
 	console.log("Login!")
 	try {
-		const volunteer = await Volunteer.findByCredentials(req.body.email, req.body.password)
+		const volunteer = await User.findByCredentials(req.body.email, req.body.password)
 		const token = await volunteer.generateAuthToken()
 		res.cookie('auth', 'Bearer ' + token, { httpOnly: true })
+		console.log('cookies are:')
 		console.log(res.cookies)
 		res.redirect('/profile')
 	} catch (e) {
+		console.log('error')
 		console.log(e)
 		res.status(400).send()
 	}
 })
 
-
+// Logout page for volunteers
 router.get('/logout', auth, async (req, res) => {
     try {
-        req.volunteer.tokens = req.volunteer.tokens.filter((token) => {
+        req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
-        await req.volunteer.save()
+        await req.user.save()
         res.status(201).redirect("/home")
     } catch (e) {
 		console.log(e)
