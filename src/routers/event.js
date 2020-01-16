@@ -3,6 +3,7 @@ const express = require('express')
 require('../db/mongoose')
 const Event = require('../models/events')
 const router = new express.Router()
+const auth = require('../middleware/auth')
 
 app = express()
 const bodyParser = require('body-parser')
@@ -25,19 +26,36 @@ router.post('/events', async (req, res) =>{
 
 // Routes to singular event view
 router.get('/events/view', async (req, res) => { 
+	console.log('here')
+	console.log(req.query.eventName)
+	console.log(req.cookies.auth)
 	try { 
-		if (req.query.eventName) { 
+		// Render page if user is logged in
+		if ((req.query.eventName) && (req.cookies.auth)) { 
+			// Get a user if logged in
+			const token = req.cookies.auth.replace('Bearer ', '')   
+		    const decoded = jwt.verify(token, 'thisismysecret')       
+		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+
+		    // Throw error if no user
+		    if (!user) { 
+		            res.clearCookie('auth')
+		            throw new Error()
+		    }
+
+		    //Get event to render page with
 			const events = await Event.find({"eventName":req.query.eventName})
 			res.render('view', {
 				eventName: events[0].eventName,
 				month: events[0].month,
 				day: events[0].day,
 				time: events[0].time,
-				description: events[0].description
+				description: events[0].description,
+				manageHREF: user[0].manageHREF,
+				text: user[0].text,
 			})
 		}
 		else { 
-			console.log('redirecting, no event specified')
 			res.status(201).redirect('/events')
 		}
 	} catch (e) { 
@@ -49,8 +67,6 @@ router.get('/events/view', async (req, res) => {
 router.get('/events', async (req, res) => { 
 	try { 
 		const events = await Event.find({})
-		console.log(events)
-		console.log("render events page")
 		// Render "events.hbs" with const events
 		if(req.cookies.auth){	
 			res.render('events',{
@@ -97,28 +113,48 @@ router.get('/event', async (req, res) => {
 })
 
 //TODO: Manage Volunteers
-router.get('/events/manage', async(req,res) => { 
-	const updates = Object.keys(req.body) //Not sure what this does
-	const allowedUpdates = [''] // should be just 'volunteers' and 'events'
-	const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-	if (!isValidOperation) { 
-		return res.status(400).send({error: 'Invalid update'})
-	}
+// Coordinator - manage volunteers page
+// Volunteer - manage events page
+// Not logged in - Log in to see page
+router.get('/events/manage', auth, async(req,res) => { 
 
 	try { 
+		//Render page if user is logged in
 		if ((req.cookies.auth) && (req.query.eventName)) { 
+			// Get a user if logged in
+			const token = req.cookies.auth.replace('Bearer ', '')   
+		    const decoded = jwt.verify(token, 'thisismysecret')       
+		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+		    
+		    // Throw error if no user
+		    if (!user) { 
+		            res.clearCookie('auth')
+		            throw new Error()
+		    }
+
+		    //Get event to render page with
 			const event = await Event.find({"eventName":req.query.eventName})
-			res.render('manage', {
-				eventName: events[0].eventName,
-				month: events[0].month,
-				day: events[0].day,
-				time: events[0].time,
-				description: events[0].description
-				// user text: event[0].text
-				volunteers: events[0].volunteers
-			})
+			// Render manage volunteers page
+			if (user[0].userType == 'coordinator') { 
+				res.render('manage', {
+					eventName: events[0].eventName,
+					month: events[0].month,
+					day: events[0].day,
+					time: events[0].time,
+					description: events[0].description
+					//users: events[0].users
+				})
+			// TODO: Render manage events page
+			} else if(user[0].userType == 'volunteer') { 
+				res.render('manage')
+			// Not a coordinator or volunteer, error
+			} else {
+				res.status(500).send()
+			}
+		// Not logged in send to login page
 		} else { 
-			//Reroute to login page
+			console.log('rendering login')
+			res.redirect('../login')
 		}
 	} catch (e) { 
 		res.status(500).send(e)

@@ -6,13 +6,8 @@ const jwt = require('jsonwebtoken')
 const UserSchema = new mongoose.Schema({
 	userType: { 
 		type: String, 
-		required: true,
 		trim: true,
-		validate(value) {
-			if ((value != 'administrator') or (value != 'volunteer')) {
-				throw new Error('Incorrect User Type')
-			}
-		}
+        enum: ['volunteer', 'coordinator']
 	}, 
 	firstName: {
         type: String,
@@ -60,7 +55,10 @@ const UserSchema = new mongoose.Schema({
     text: {
         type: String, 
         default: 'login to sign up for event',
-    }
+    },
+    manageHREF: { 
+        type: String,
+    },
     tokens: [{
         token: {
             type: String, required: true
@@ -68,10 +66,10 @@ const UserSchema = new mongoose.Schema({
     }]
 })
 
-VolunteerSchema.virtual('events', {
+UserSchema.virtual('events', {
     ref: 'Event',
     localField: '_id',
-    foreignField: 'users'
+    foreignField: 'Volunteers'
 })
 
 // TEST CASES:
@@ -124,7 +122,7 @@ UserSchema.methods.generateAuthToken = async function () {
 UserSchema.statics.findByCredentials = async (email, password) => {
     console.log('Credential')
     console.log(email)
-    const user = await Volunteer.findOne({ email })
+    const user = await User.findOne({ email })
     console.log(user)
     if (!user) {
         throw new Error('Unable to login')
@@ -151,6 +149,4 @@ UserSchema.pre('save', async function (next) {
 })
 
 const User = mongoose.model('User', UserSchema)
-
-
 module.exports = User
