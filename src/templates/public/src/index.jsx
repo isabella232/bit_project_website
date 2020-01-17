@@ -10,24 +10,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button,Modal } from 'react-bootstrap'
 
 function Example(props) {
-  const [show, setShow] = useState(true);
-  const handleClose = () => setShow(false);
-  console.log(props.show)
-
   return (
     <>      
-      <Modal show={props.show} onHide={handleClose}>
+      <Modal
+        show = {props.show}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+            consectetur ac, vestibulum at eros.
+          </p>
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.onChange}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.onChange}>
-            Save Changes
-          </Button>
+          <Button onClick={props.onChange}>Close</Button>
         </Modal.Footer>
       </Modal>
     </>
@@ -70,9 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log("onchange")
                 console.log(show)
                 show = false
-                ReactDOM.render(<Example show={show} onChange={onChange} />,  document.getElementById('modal-event'));
+                ReactDOM.render(<Example show={show} onChange={onChange} info={info}/>,  document.getElementById('modal-event'));
               }
-              ReactDOM.render(<Example show={show} onChange={onChange} />,  document.getElementById('modal-event'));
+              ReactDOM.render(<Example show={show} onChange={onChange} info={info}/>,  document.getElementById('modal-event'));
             }
           });
           calendar.render();

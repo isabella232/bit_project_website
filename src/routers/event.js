@@ -2,9 +2,10 @@
 const express = require('express')
 require('../db/mongoose')
 const Event = require('../models/events')
+const jwt = require('jsonwebtoken') 
 const router = new express.Router()
 const auth = require('../middleware/auth')
-
+const User = require('../models/user')
 app = express()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
@@ -33,10 +34,12 @@ router.get('/events/view', async (req, res) => {
 		// Render page if user is logged in
 		if ((req.query.eventName) && (req.cookies.auth)) { 
 			// Get a user if logged in
+			console.log("herere")
 			const token = req.cookies.auth.replace('Bearer ', '')   
-		    const decoded = jwt.verify(token, 'thisismysecret')       
+			const decoded = jwt.verify(token, 'thisismysecret')  
+			console.log(decoded)     
 		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
-
+			console.log(user)
 		    // Throw error if no user
 		    if (!user) { 
 		            res.clearCookie('auth')
@@ -45,14 +48,15 @@ router.get('/events/view', async (req, res) => {
 
 		    //Get event to render page with
 			const events = await Event.find({"eventName":req.query.eventName})
+			console.log("events",events)
 			res.render('view', {
 				eventName: events[0].eventName,
 				month: events[0].month,
 				day: events[0].day,
 				time: events[0].time,
 				description: events[0].description,
-				manageHREF: user[0].manageHREF,
-				text: user[0].text,
+				// manageHREF: user[0].manageHREF,
+				// text: user[0].text,
 			})
 		}
 		else { 
