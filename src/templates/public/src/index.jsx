@@ -4,31 +4,28 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import Chat from './chatroom';
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button,Modal } from 'react-bootstrap'
 
-function Example() {
-  const [show, setShow] = useState(false);
-
+function Example(props) {
+  const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  console.log(props.show)
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+    <>      
+      <Modal show={props.show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={props.onChange}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={props.onChange}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -66,7 +63,16 @@ document.addEventListener('DOMContentLoaded', function() {
             eventLimit: true, // allow "more" link when too many events
             events: {events},
             eventClick: function(info) {  
-              ReactDOM.render(<Example />,  document.getElementById('modal-event'));
+              console.log("event click")
+              console.log(info)
+              var show = true;
+              let onChange=()=>{
+                console.log("onchange")
+                console.log(show)
+                show = false
+                ReactDOM.render(<Example show={show} onChange={onChange} />,  document.getElementById('modal-event'));
+              }
+              ReactDOM.render(<Example show={show} onChange={onChange} />,  document.getElementById('modal-event'));
             }
           });
           calendar.render();
@@ -74,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
 const navBar = (
   <ul className="header">          
     <img src="//static1.squarespace.com/static/5cb55271b914494e48f5546b/t/5d22449b59005400016749ca/1575162183637/?format=1500w" alt="bit project" className="Header-branding-logo"/>
