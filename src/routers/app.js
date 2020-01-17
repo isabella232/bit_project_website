@@ -53,7 +53,6 @@ router.get('/events/:eventName', async (req, res) => {
 	}
 })
 
-
 router.get('/home', (req, res) => {
 	if(req.cookies.auth){	
 		res.render('index',{

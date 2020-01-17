@@ -23,14 +23,27 @@
           <input type="text" placeholder="Enter Email" name="email" required>
       
           <label for="password"><b>Password</b></label>
-         <input type="password" placeholder="Enter Password" name="password" required>
+          <input type="password" placeholder="Enter Password" name="password" required>
       
+          <!-- TODO: change it so someone can only select one of Coordinator or Volunteer --> 
+          <label> 
+            <input type="checkbox" value="coordinator" placeholder="coordinator" name="userType"> Coordinator
+          </label>
+        
+          <label> 
+            <input type="checkbox" value = "volunteer" placeholder="volunteer" name="userType"> Volunteer
+          </label>
+
           <label> 
             <input type="checkbox"> Remember me
           </label>
+
+          <!-- TODO: fix so that if coordinator this is a different value --> 
+          <input type="hidden" name="manageHREF" value="/events/manage">
+          <input type="hidden" name="text" value="Sign up for this Event"> 
       
           <div class="continue">
-            <a href="Login.html"><button type="button" class="cancel-button">Cancel</button>
+            <a href="/login"><button type="button" class="cancel-button">Cancel</button>
             <a href="sign-up-success.html"><button type="submit" class="signup-button">Sign Up</button>
           </div>
         </form>

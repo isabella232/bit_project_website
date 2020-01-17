@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../public/volunteer-page.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<img src="../public/Event-header.jpg" alt="">
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+    <div class="row">
+        <h1 class="page-header">
+            <div class="crush">{{Eventname}} Volunteer Assignment</div>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    {{#each events}}
+                    <tr>
+                        <td>
+                            <!-- <button class="btn-view-fund btn btn-default btn-xs  pull-left" type="button"></button> -->
+                            <span class="" aria-hidden="true"></span>
+                            </button>
+                        </td>
+
+                        <td colspan="5">{{firstName}} {{lastName}} {{email}}</td>
+                        <td style="text-align: right;">
+                            <form action="{{{}}}" method="get"> <!-- TODO: FIX--> 
+                                <input type="hidden" name="eventName" value="{{{this.eventName}}}">
+                                <button class="btn-view-fund btn btn-default btn-xs" type="button">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </button>
+                            </form>
+                            <form action="{{{}}}" method="get"> <!-- TODO: FIX--> 
+                                <input type="hidden" name="eventName" value="{{{this.eventName}}}">
+                                <button class="btn-view-fund btn btn-default btn-xs" type="button">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-lg">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

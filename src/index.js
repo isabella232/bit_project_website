@@ -3,11 +3,10 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
+//const adminRouter = require('./routers/admin')
 const volunteerRouter = require('./routers/volunteers')
-const adminRouter = require('./routers/admin')
 const eventRouter = require('./routers/event')
 const pusherRouter = require('./routers/chatroom')
-const applicantsRouter = require('./routers/applicants')
 const appRouter = require('./routers/app')
 const app = express()
 const port = process.env.PORT || 3000
@@ -35,12 +34,11 @@ app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
+
 // use modules
-// app.use(express.static('./public', config.static)) // TODO: also check this
-app.use(volunteerRouter) // register router with express
 // app.use(adminRouter) // only for web dev
+app.use(volunteerRouter)
 app.use(eventRouter)
-app.use(applicantsRouter)
 app.use(appRouter)
 app.use(pusherRouter)
 

@@ -42,10 +42,12 @@ const Event = mongoose.model('Event', {
         required: true,
         trim: true
     },
-    attendeeCount: {
-        type: Number,
-        default: 0
-    },
+    volunteers: [{
+        volunteer: {
+            type: mongoose.Schema.Types.ObjectID,
+            ref: 'User',
+        } 
+    }],
     href: {
         type: String,
         default: '/turkey-trot'
