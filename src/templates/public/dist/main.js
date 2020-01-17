@@ -81788,6 +81788,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_10__);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -81809,9 +81816,13 @@ function Example(props) {
     closeButton: true
   }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Title, {
     id: "contained-modal-title-vcenter"
-  }, "Modal heading")), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Body, null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("h4", null, "Centered Modal"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("p", null, "Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.")), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Footer, null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+  }, props.eventName)), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Body, null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("h4", null, "Location"), props.location, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("h4", null, "Description"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("p", null, props.description)), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Footer, null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
     onClick: props.onChange
-  }, "Close"))));
+  }, "Close"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
+    onClick: props.onChange
+  }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("a", {
+    href: props.route
+  }, " Go to Event Page ")))));
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -81849,26 +81860,90 @@ document.addEventListener('DOMContentLoaded', function () {
           events: {
             events: events
           },
-          eventClick: function eventClick(info) {
-            console.log("event click");
-            console.log(info);
-            var show = true;
+          eventClick: function () {
+            var _eventClick = _asyncToGenerator(
+            /*#__PURE__*/
+            regeneratorRuntime.mark(function _callee2(info) {
+              var getDataAxios, _getDataAxios;
 
-            var onChange = function onChange() {
-              console.log("onchange");
-              console.log(show);
-              show = false;
-              react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
-                show: show,
-                onChange: onChange
-              }), document.getElementById('modal-event'));
-            };
+              return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      _getDataAxios = function _ref2() {
+                        _getDataAxios = _asyncToGenerator(
+                        /*#__PURE__*/
+                        regeneratorRuntime.mark(function _callee() {
+                          var response, show, onChange;
+                          return regeneratorRuntime.wrap(function _callee$(_context) {
+                            while (1) {
+                              switch (_context.prev = _context.next) {
+                                case 0:
+                                  _context.next = 2;
+                                  return axios__WEBPACK_IMPORTED_MODULE_10___default.a.get("/event?eventName=" + info.event.title + "&findEvent=True");
 
-            react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
-              show: show,
-              onChange: onChange
-            }), document.getElementById('modal-event'));
-          }
+                                case 2:
+                                  response = _context.sent;
+                                  console.log(response.data);
+                                  event = response.data[0];
+                                  show = true;
+
+                                  onChange = function onChange() {
+                                    console.log("onchange");
+                                    console.log(show);
+                                    show = false;
+                                    react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
+                                      show: show,
+                                      onChange: onChange,
+                                      eventName: info.event.title,
+                                      description: event.description,
+                                      location: event.location,
+                                      route: "/events/view?eventName=" + info.event.title
+                                    }), document.getElementById('modal-event'));
+                                  };
+
+                                  react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
+                                    show: show,
+                                    onChange: onChange,
+                                    eventName: info.event.title,
+                                    description: event.description,
+                                    location: event.location,
+                                    route: "/events/view?eventName=" + info.event.title
+                                  }), document.getElementById('modal-event'));
+
+                                case 8:
+                                case "end":
+                                  return _context.stop();
+                              }
+                            }
+                          }, _callee);
+                        }));
+                        return _getDataAxios.apply(this, arguments);
+                      };
+
+                      getDataAxios = function _ref() {
+                        return _getDataAxios.apply(this, arguments);
+                      };
+
+                      console.log("event click");
+                      console.log(info);
+                      console.log(info.event.title);
+                      getDataAxios();
+
+                    case 6:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee2);
+            }));
+
+            function eventClick(_x) {
+              return _eventClick.apply(this, arguments);
+            }
+
+            return eventClick;
+          }()
         });
         calendar.render();
       });

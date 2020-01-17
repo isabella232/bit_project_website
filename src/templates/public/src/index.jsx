@@ -1,4 +1,4 @@
-import { Calendar } from '@fullcalendar/core';
+import { Calendar, refineProps } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button,Modal } from 'react-bootstrap'
+import axios from 'axios';
 
 function Example(props) {
   return (
@@ -20,20 +21,22 @@ function Example(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+            {props.eventName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
+          <h4>Location</h4>
+          {props.location}
+          <h4>Description</h4>
           <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+            {props.description}
           </p>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onChange}>Close</Button>
+          <Button onClick={props.onChange}><a href={props.route} > Go to Event Page </a></Button>
         </Modal.Footer>
+        
       </Modal>
     </>
   );
@@ -67,18 +70,33 @@ document.addEventListener('DOMContentLoaded', function() {
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             events: {events},
-            eventClick: function(info) {  
+            eventClick: async function(info){  
               console.log("event click")
               console.log(info)
-              var show = true;
-              let onChange=()=>{
-                console.log("onchange")
-                console.log(show)
-                show = false
-                ReactDOM.render(<Example show={show} onChange={onChange} info={info}/>,  document.getElementById('modal-event'));
+              console.log(info.event.title)
+              async function getDataAxios(){
+                const response =
+                  await axios.get("/event?eventName="+info.event.title +"&findEvent=True")
+                  console.log(response.data)
+                  event = response.data[0]
+                  var show = true;
+                  let onChange=()=>{
+                    console.log("onchange")
+                    console.log(show)
+                    show = false
+                    ReactDOM.render(<Example show={show} onChange={onChange} eventName={info.event.title} 
+                      description={event.description} location={event.location} route={"/events/view?eventName="+info.event.title}/>,  document.getElementById('modal-event'));
+                  }
+                  ReactDOM.render(<Example show={show} onChange={onChange} eventName={info.event.title}
+                     description={event.description} location={event.location} route={"/events/view?eventName="+info.event.title} />,  document.getElementById('modal-event'));
+                  
               }
-              ReactDOM.render(<Example show={show} onChange={onChange} info={info}/>,  document.getElementById('modal-event'));
+              getDataAxios()
+              
+                
+              
             }
+              
           });
           calendar.render();
       });

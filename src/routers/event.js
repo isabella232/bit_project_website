@@ -22,9 +22,8 @@ router.post('/events', async (req, res) =>{
     	res.status(201).redirect('/events')
     } catch(e) {
         res.status(400).send(e)
-    }
+	}
 })
-
 // Routes to singular event view
 router.get('/events/view', async (req, res) => { 
 	console.log('here')
@@ -100,7 +99,14 @@ router.get('/event', async (req, res) => {
 	console.log()
 	// TODO: Link search bar button to actually retrive it upon searching
 	try { 
-		if (req.query.eventName) { 
+		console.log(req.query.eventName)
+		console.log(req.query.findEvent)
+		if (req.query.eventName && req.query.findEvent ){
+			console.log("find event")
+			const events = await Event.find({"eventName":req.query.eventName})
+			res.send(events)
+		}
+		else if (req.query.eventName) { 
 			query.eventName = req.query.eventName
 			const events = await Event.find({"eventName":query.eventName})
 			res.render('events', {
