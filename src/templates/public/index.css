@@ -104,15 +104,15 @@ title{
 }
 
 .container-contact{
-  padding-top: 170px;
+  padding-top: 130px;
   background-color: #01ACEE;
-  z-index: -1;
 }
 
 .text-secondary-contact{
   color: white;
   text-align: center;
 }
+
 
 :root {
   --blue: #007bff;
@@ -701,6 +701,7 @@ pre code {
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+  z-index: -1;
 }
 
 .no-gutters {
@@ -7590,8 +7591,8 @@ button.bg-dark:focus {
   margin-top: 0.5rem !important;
 }
 
-.mr-3,
-.mx-3 {
+.mr-2,
+.mx-2 {
   margin-right: 0.5rem !important;
 }
 
@@ -7742,7 +7743,6 @@ button.bg-dark:focus {
 .pb-2,
 .py-2 {
   padding-bottom: 0.5rem !important;
-  z-index: -1;
 }
 
 .pl-2,
@@ -9711,10 +9711,8 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .btn-xl {
-  padding: .5rem 1rem;
-  font-size: 1rem;
-  margin-bottom: 30px;
-  
+  padding: 1rem 1.75rem;
+  font-size: 1.25rem;
 }
 
 .btn-social {
