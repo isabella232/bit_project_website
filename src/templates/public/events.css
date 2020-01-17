@@ -17,7 +17,7 @@
   .sm-icon{
     height: 30px;
   }
-  ul{
+  .ul-footer{
     margin-block-start: 1em;
     margin-block-end: 1em;
   }
@@ -88,7 +88,7 @@
     padding: 15px;
   }
   
-  a {
+  .a-footer {
     display: inline-block;
     text-decoration-skip-ink: auto;
     color: inherit;
@@ -113,7 +113,46 @@
     text-align: center;
   }
   
+  input {
+    z-index: 1;
+    display: inline-flex;
+    width: 80%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    border: 3px solid gray; /* Add a grey border */
+    margin-top: 0px; /* Add some space below the input */
+    margin-bottom: 0px;
+    
+  }
   
+  .event-ul {
+    /* Remove default list styling */
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    z-index: -1;
+    
+  }
+  .event-content{
+      color: black;
+      bottom: 130px;
+      position: relative;
+      z-index: -1;
+      font-family: 'Roboto';
+  }
+
+  .button-border{
+      padding-top: 140px;
+      padding-left:300px;
+      padding-right: 300px;
+      z-index: -1;
+  }
+  
+  
+  
+  .li a:hover:not(.header) {
+    background-color: #eee; /* Add a hover effect to all links, except for headers */
+  }
+
   :root {
     --blue: #007bff;
     --indigo: #6610f2;
