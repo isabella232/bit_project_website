@@ -1,0 +1,127 @@
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+.Header-branding-logo{
+    height: 50px;
+    width: 70;
+}
+
+/* top nav bar */
+
+.nav-list {
+    left: 0;
+    margin-top: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 0;
+    list-style-type: none;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+
+    width: 100%;
+}
+
+.nav-style {
+    float: right;
+    border-radius: 25px;
+    background-color: skyblue
+}
+
+.nav-list li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 15px 30px;
+    text-decoration: none;
+}
+
+.nav-list li a:hover:not(.active) {
+    background-color: lightblue;
+    border-radius: 25px;
+}
+
+.active {
+    background-color: skyblue;
+    border-radius: 25px;
+}
+/* end top nav bar */
+
+.header-image{
+    width: 100%;
+    z-index: -1;
+    left: 0; 
+    top: 80px;
+    position: relative;
+    filter: brightness(50%)
+
+} 
+
+.main-title {
+    color:white;
+    font-size: 55px;
+    font-weight: bolder;
+    text-align: center;
+    bottom: 350px;
+    float: inline-start;
+    margin-bottom: 15px;
+    margin-top: 0px;
+    z-index: -1;
+    position: relative;
+}
+
+
+.calendar{
+    margin-left: 0px;
+    padding-left: 70px;
+    width: 90%;
+}
+
+
+input {
+    z-index: 1;
+    display: inline-flex;
+    width: 80%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    border: 3px solid gray; /* Add a grey border */
+    margin-top: 0px; /* Add some space below the input */
+    margin-bottom: 0px;
+    
+  }
+  
+  .event-ul {
+    /* Remove default list styling */
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    z-index: -1;
+    
+  }
+  .event-content{
+      color: black;
+      bottom: 130px;
+      position: relative;
+      z-index: -1;
+      font-family: 'Roboto';
+  }
+
+  .button-border{
+      padding-top: 140px;
+      padding-left:300px;
+      padding-right: 300px;
+      z-index: -1;
+  }
+  
+  
+  
+  .li a:hover:not(.header) {
+    background-color: #eee; /* Add a hover effect to all links, except for headers */
+  }
+
+.toggle-button{
+   margin-left: 70px;
+}

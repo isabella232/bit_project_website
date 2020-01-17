@@ -104,7 +104,7 @@ title{
 }
 
 .container-contact{
-  padding-top: 130px;
+  padding-top: 170px;
   background-color: #01ACEE;
   z-index: -1;
 }
@@ -113,7 +113,6 @@ title{
   color: white;
   text-align: center;
 }
-
 
 :root {
   --blue: #007bff;
@@ -7591,8 +7590,8 @@ button.bg-dark:focus {
   margin-top: 0.5rem !important;
 }
 
-.mr-2,
-.mx-2 {
+.mr-3,
+.mx-3 {
   margin-right: 0.5rem !important;
 }
 
@@ -9712,8 +9711,10 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .btn-xl {
-  padding: 1rem 1.75rem;
-  font-size: 1.25rem;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  
 }
 
 .btn-social {
