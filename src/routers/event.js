@@ -2,9 +2,10 @@
 const express = require('express')
 require('../db/mongoose')
 const Event = require('../models/events')
+const jwt = require('jsonwebtoken') 
 const router = new express.Router()
 const auth = require('../middleware/auth')
-
+const User = require('../models/user')
 app = express()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
@@ -21,9 +22,8 @@ router.post('/events', async (req, res) =>{
     	res.status(201).redirect('/events')
     } catch(e) {
         res.status(400).send(e)
-    }
+	}
 })
-
 // Routes to singular event view
 router.get('/events/view', async (req, res) => { 
 	console.log('here')
@@ -33,10 +33,12 @@ router.get('/events/view', async (req, res) => {
 		// Render page if user is logged in
 		if ((req.query.eventName) && (req.cookies.auth)) { 
 			// Get a user if logged in
+			console.log("herere")
 			const token = req.cookies.auth.replace('Bearer ', '')   
-		    const decoded = jwt.verify(token, 'thisismysecret')       
+			const decoded = jwt.verify(token, 'thisismysecret')  
+			console.log(decoded)     
 		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
-
+			console.log(user)
 		    // Throw error if no user
 		    if (!user) { 
 		            res.clearCookie('auth')
@@ -45,14 +47,15 @@ router.get('/events/view', async (req, res) => {
 
 		    //Get event to render page with
 			const events = await Event.find({"eventName":req.query.eventName})
+			console.log("events",events)
 			res.render('view', {
 				eventName: events[0].eventName,
 				month: events[0].month,
 				day: events[0].day,
 				time: events[0].time,
 				description: events[0].description,
-				manageHREF: user[0].manageHREF,
-				text: user[0].text,
+				// manageHREF: user[0].manageHREF,
+				// text: user[0].text,
 			})
 		}
 		else { 
@@ -96,7 +99,14 @@ router.get('/event', async (req, res) => {
 	console.log()
 	// TODO: Link search bar button to actually retrive it upon searching
 	try { 
-		if (req.query.eventName) { 
+		console.log(req.query.eventName)
+		console.log(req.query.findEvent)
+		if (req.query.eventName && req.query.findEvent ){
+			console.log("find event")
+			const events = await Event.find({"eventName":req.query.eventName})
+			res.send(events)
+		}
+		else if (req.query.eventName) { 
 			query.eventName = req.query.eventName
 			const events = await Event.find({"eventName":query.eventName})
 			res.render('events', {
