@@ -28,19 +28,21 @@
           <!-- TODO: change it so someone can only select one of Coordinator or Volunteer --> 
           <label> 
             <input type="checkbox" value="coordinator" placeholder="coordinator" name="userType"> Coordinator
+            <input type="hidden" name="manageHREF" value="/events/manage">
+            <input type="hidden" name="text" value="Manage the volunteers for this Event"> 
+            <input type="hidden" name="userMethod" value="get" >
           </label>
         
           <label> 
             <input type="checkbox" value = "volunteer" placeholder="volunteer" name="userType"> Volunteer
+            <input type="hidden" name="manageHREF" value="/events/addevent">
+            <input type="hidden" name="text" value="Sign up for this Event"> 
+            <input type="hidden" name="userMethod" value="post">
           </label>
 
           <label> 
             <input type="checkbox"> Remember me
           </label>
-
-          <!-- TODO: fix so that if coordinator this is a different value --> 
-          <input type="hidden" name="manageHREF" value="/events/manage">
-          <input type="hidden" name="text" value="Sign up for this Event"> 
       
           <div class="continue">
             <a href="/login"><button type="button" class="cancel-button">Cancel</button>

@@ -31,21 +31,29 @@ router.get('/events/view', async (req, res) => {
 	console.log(req.cookies.auth)
 	try { 
 		// Render page if user is logged in
-		if ((req.query.eventName) && (req.cookies.auth)) { 
+		if ((req.query.eventName) && (req.cookies.auth)) {
 			// Get a user if logged in
-			console.log("herere")
 			const token = req.cookies.auth.replace('Bearer ', '')   
-			const decoded = jwt.verify(token, 'thisismysecret')  
-			console.log(decoded)     
+			const decoded = jwt.verify(token, 'thisismysecret')      
 		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
-			console.log(user)
 		    // Throw error if no user
 		    if (!user) { 
 		            res.clearCookie('auth')
 		            throw new Error()
 		    }
-
 		    //Get event to render page with
+			const events = await Event.find({"eventName":req.query.eventName})
+			res.render('view', {
+				eventName: events[0].eventName,
+				month: events[0].month,
+				day: events[0].day,
+				time: events[0].time,
+				description: events[0].description,
+				manageHREF: user.manageHREF,
+				text: user.text,
+			})
+		} else if (req.query.eventName){
+
 			const events = await Event.find({"eventName":req.query.eventName})
 			console.log("events",events)
 			res.render('view', {
@@ -54,8 +62,6 @@ router.get('/events/view', async (req, res) => {
 				day: events[0].day,
 				time: events[0].time,
 				description: events[0].description,
-				// manageHREF: user[0].manageHREF,
-				// text: user[0].text,
 			})
 		}
 		else { 
@@ -168,6 +174,15 @@ router.get('/events/manage', auth, async(req,res) => {
 		}
 	} catch (e) { 
 		res.status(500).send(e)
+	}
+})
+
+//TODO: add an event to volunteer using signup button
+router.patch('/events/addevent', auth, async(req,res) => {
+	try { 
+
+	} catch (e) { 
+
 	}
 })
 
