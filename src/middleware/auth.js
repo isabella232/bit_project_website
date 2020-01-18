@@ -3,9 +3,9 @@ const User = require('../models/user')
 
 const auth = async (req, res, next) => {
     try { 
-        console.log('authenticated')
-        const token = req.cookies.auth.replace('Bearer ', '')    
-        const decoded = jwt.verify(token, 'thisismysecret')         
+        console.log(req.cookies)
+        const token = req.cookies.auth.replace('Bearer ', '')  
+        const decoded = jwt.verify(token, 'thisismysecret')
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
         console.log(user)
         if (!user) { 

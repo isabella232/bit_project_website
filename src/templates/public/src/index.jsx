@@ -34,9 +34,8 @@ function Example(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onChange}>Close</Button>
-          <Button onClick={props.onChange}><a href={props.route} > Go to Event Page </a></Button>
+          <Button><a href={props.route} > Go to Event Page </a></Button>
         </Modal.Footer>
-        
       </Modal>
     </>
   );
@@ -76,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
               console.log(info.event.title)
               async function getDataAxios(){
                 const response =
-                  await axios.get("/event?eventName="+info.event.title +"&findEvent=True")
+                  await axios.get("/event?eventName="+ info.event.title +"&findEvent=True")
                   console.log(response.data)
                   event = response.data[0]
                   var show = true;
@@ -84,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log("onchange")
                     console.log(show)
                     show = false
+                    console.log("/events/view?eventName="+info.event.title)
                     ReactDOM.render(<Example show={show} onChange={onChange} eventName={info.event.title} 
                       description={event.description} location={event.location} route={"/events/view?eventName="+info.event.title}/>,  document.getElementById('modal-event'));
                   }

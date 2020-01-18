@@ -17,12 +17,14 @@
   .sm-icon{
     height: 30px;
   }
-  ul{
+  .ul-footer{
     margin-block-start: 1em;
     margin-block-end: 1em;
+
   }
   
   .footer__StyledSocialList{
+
     list-style-type:none;
     display: flex;
     -webkit-box-pack: justify;
@@ -31,6 +33,7 @@
     align-items: center;
   
   }
+
    /* top nav bar */
   
   .nav-list {
@@ -43,7 +46,6 @@
     background-color: white;
     position: fixed;
     top: 0;
-    z-index: 1;
   
     width: 100%;
   }
@@ -88,7 +90,7 @@
     padding: 15px;
   }
   
-  a {
+  .a-footer {
     display: inline-block;
     text-decoration-skip-ink: auto;
     color: inherit;
@@ -113,7 +115,62 @@
     text-align: center;
   }
   
+  input {
+    z-index: 1;
+    display: inline-flex;
+    width: 90%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    border: 3px solid gray; /* Add a grey border */
+    margin-top: 0px; /* Add some space below the input */
+    margin-bottom: 0px;
+    
+  }
+
+  .search-buttons{
+      margin-top: 15px;
+  }
   
+  .toggle-button{
+    margin-left: 70px;
+ }
+
+  .calendar{
+    margin-left: 0px;
+    padding-left: 70px;
+    width: 90%;
+}
+  .event-ul {
+    /* Remove default list styling */
+    margin-top: 15px;
+    text-align: center;
+    padding: 0;
+    z-index: -1;
+    font-size: 25px;
+    
+  }
+  .event-content{
+      color: black;
+      bottom: 130px;
+      position: relative;
+      z-index: -1;
+      font-family: 'Roboto';
+      font-size: 20px;
+     
+  }
+
+  .button-border{
+      padding-top: 150px;
+      padding-left: 100px;
+      padding-right: 100px;
+      z-index: -1;
+  }
+  
+  
+  
+  .li a:hover:not(.header) {
+    background-color: #eee; /* Add a hover effect to all links, except for headers */
+  }
+
   :root {
     --blue: #007bff;
     --indigo: #6610f2;

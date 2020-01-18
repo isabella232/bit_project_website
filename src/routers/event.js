@@ -13,17 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // REST APIs
 
-// Routes to add event
-router.post('/events', async (req, res) =>{
-    const event = new Event(req.body)
-	event.href = "/events/view?eventName=" + event.eventName
-    try { 
-    	await event.save()
-    	res.status(201).redirect('/events')
-    } catch(e) {
-        res.status(400).send(e)
-	}
-})
 // Routes to singular event view
 router.get('/events/view', async (req, res) => { 
 	console.log('here')
@@ -72,6 +61,18 @@ router.get('/events/view', async (req, res) => {
 	}
 })
 
+
+// Routes to add event
+router.post('/events', async (req, res) =>{
+    const event = new Event(req.body)
+	event.href = "/events/view?eventName=" + event.eventName
+    try { 
+    	await event.save()
+    	res.status(201).redirect('/events')
+    } catch(e) {
+        res.status(400).send(e)
+	}
+}) 
 // Routes to Events Browsing Page
 router.get('/events', async (req, res) => { 
 	try { 
@@ -105,10 +106,9 @@ router.get('/event', async (req, res) => {
 	console.log()
 	// TODO: Link search bar button to actually retrive it upon searching
 	try { 
-		console.log(req.query.eventName)
-		console.log(req.query.findEvent)
+		console.log("eventName",req.query.eventName)
+		console.log("findEvent",req.query.findEvent)
 		if (req.query.eventName && req.query.findEvent ){
-			console.log("find event")
 			const events = await Event.find({"eventName":req.query.eventName})
 			res.send(events)
 		}

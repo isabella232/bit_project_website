@@ -81818,9 +81818,7 @@ function Example(props) {
     id: "contained-modal-title-vcenter"
   }, props.eventName)), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Body, null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("h4", null, "Location"), props.location, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("h4", null, "Description"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("p", null, props.description)), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Modal"].Footer, null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
     onClick: props.onChange
-  }, "Close"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], {
-    onClick: props.onChange
-  }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("a", {
+  }, "Close"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["Button"], null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("a", {
     href: props.route
   }, " Go to Event Page ")))));
 }
@@ -81892,6 +81890,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     console.log("onchange");
                                     console.log(show);
                                     show = false;
+                                    console.log("/events/view?eventName=" + info.event.title);
                                     react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
                                       show: show,
                                       onChange: onChange,
