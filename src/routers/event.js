@@ -40,7 +40,6 @@ router.get('/events/view', async (req, res) => {
 				text: user.text,
 			})
 		} else if (req.query.eventName){
-			console.log('line 41')
 			const events = await Event.find({"eventName":req.query.eventName})
 			res.render('view', {
 				eventName: events[0].eventName,
@@ -180,35 +179,38 @@ router.post('/events/addevent', auth, async(req,res) => {
 
 			// Check that user is of volunteer type
 			if (user.userType == 'volunteer') {
-				console.log('line 184')
 				// Update event
-				console.log(req.body.eventName)
 				const event = await Event.findOne({"eventName":req.body.eventName})
-				console.log(typeof(user))
-				console.log(typeof(user.id))
 				event.pendingVolunteers.push(user)
 				const newEvent = await event.save()
-				console.log('line 189')
-				console.log(newEvent)
 
 				// Update user
 				//const user = await User.findOneAndUpdate()
 				
 				//res.redirect('')
-				console.log('line 194')
 			} else {
 				res.status(500).send()
 			}
 		// Not logged in, send to login page
 		} else { 
-			console.log('rendering login')
 			res.redirect('../login')
 		}
 	} catch (e) { 
-		console.log(e)
-		console.log('line 203')
 		res.status(500).send(e)
 	}
+})
+
+// get pending volunteers for a given event
+router.get('/events/getPending/:eventName', auth, async(req, res) => {
+	const event = await Event.findOne({"eventName": req.params.eventName})
+
+	const pendingIds = event.pendingVolunteers
+	for (var i = 0; i < pendingIds.length(); i++) {
+		var user = User.findOne(pendingIds[i])
+		var name = user.firstName + ' ' + user.lastName
+		names.push(name)
+	}
+	return names
 })
 
 //Commmented the below out because we're not using them and they don't seem to work anyways

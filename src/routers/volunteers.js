@@ -27,13 +27,14 @@ router.post('/signup', async (req, res) => {
 	}
 })
 
+// add volunteer after sign up
 router.post('/volunteers', async (req, res) => {
 	console.log(req.body)
 	const volunteer = new User(req.body)
 	console.log(volunteer)
 	try {
 		await volunteer.save()
-		res.status(201).redirect("Login.html")
+		res.status(201).redirect("/login")
 	} catch (e) {
 		console.log(e);
 		res.status(400).send(e)
