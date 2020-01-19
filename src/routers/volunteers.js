@@ -8,6 +8,7 @@ app = express()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+var ObjectId = require('mongodb').ObjectID;
 
 // TODO: DO WE USE THIS page
 // REST APIs
@@ -16,16 +17,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 router.post('/signup', async (req, res) => {
 	console.log(req.body)
 	res.send("Succeed!")
-	const volunteer = new User(req.body)
-	console.log(volunteer)
-	try {
-		await volunteer.save()
-		res.status(201).redirect("/login")
-	} catch (e) {
-		console.log(e);
-		res.status(400).send(e)
-	}
+	// const volunteer = new User(req.body)
+	// console.log(volunteer)
+	// try {
+	// 	await volunteer.save()
+	// 	res.status(201).redirect("/login")
+	// } catch (e) {
+	// 	console.log(e);
+	// 	res.status(400).send(e)
+	// }
 })
+
+// Logout page for volunteers
+router.get('/profile/me',  async (req, res) => {
+	const user = await User.find({"_id" :  new ObjectId("5e238fb84a28832d243dc30b")}) 
+	console.log(user)
+	res.status(201).send(user)
+})
+
 
 router.post('/volunteers', async (req, res) => {
 	console.log(req.body)
@@ -80,6 +89,7 @@ router.get('/logout', auth, async (req, res) => {
         res.status(500).send()
     }
 })
+
 
 // Update Volunteer
 router.patch('/volunteers/:id', async (req, res) => {

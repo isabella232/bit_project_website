@@ -81884,7 +81884,9 @@ document.addEventListener('DOMContentLoaded', function () {
           var date = new Date(text[i].date);
           date.setHours(parseInt(text[i].time.slice(0, 2), 10), parseInt(text[i].time.slice(3, 5), 10));
           var end_date = new Date(text[i].end_date);
-          end_date.setHours(parseInt(text[i].time.slice(0, 2), 10), parseInt(text[i].end_time.slice(3, 5), 10));
+          end_date.setHours(parseInt(text[i].end_time.slice(0, 2), 10), parseInt(text[i].end_time.slice(3, 5), 10));
+          console.log(date.toISOString());
+          console.log(end_date.toISOString());
           events.push({
             "title": text[i].eventName,
             "start": date.toISOString(),
@@ -81895,12 +81897,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
           plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"]],
           header: {
-            left: 'prev,next today',
+            left: 'prev,next, today',
             center: 'title',
-            right: 'timeGridWeek,timeGridDay,listWeek'
+            right: 'timeGridMonth,timeGridWeek,timeGridDay,listWeek'
           },
+          defaultView: 'dayGridMonth',
           minTime: '7:00:00',
-          maxTime: '20:00:00',
+          maxTime: '18:00:00',
           navLinks: true,
           // can click day/week names to navigate views
           editable: true,
@@ -81909,8 +81912,9 @@ document.addEventListener('DOMContentLoaded', function () {
           events: {
             events: events
           },
+          eventTextColor: '#ffffff',
+          eventColor: '#F2A64A',
           themeSystem: 'bootstrap',
-          defaultView: 'timeGridWeek',
           eventClick: function () {
             var _eventClick = _asyncToGenerator(
             /*#__PURE__*/
