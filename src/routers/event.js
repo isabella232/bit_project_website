@@ -182,17 +182,20 @@ router.post('/events/addevent', auth, async(req,res) => {
 			if (user.userType == 'volunteer') {
 				console.log('line 184')
 				// Update event
-				const event = await Event.find({"eventName":req.body.eventName})
-				console.log('line 186')
-				console.log(event.pendingVolunteers)
+				console.log(req.body.eventName)
+				const event = await Event.findOne({"eventName":req.body.eventName})
+				console.log(typeof(user))
+				console.log(typeof(user.id))
 				event.pendingVolunteers.push(user)
-				console.log('line 187')
+				const newEvent = await event.save()
+				console.log('line 189')
+				console.log(newEvent)
 
 				// Update user
 				//const user = await User.findOneAndUpdate()
 				
 				//res.redirect('')
-			console.log('line 194')
+				console.log('line 194')
 			} else {
 				res.status(500).send()
 			}
@@ -202,6 +205,7 @@ router.post('/events/addevent', auth, async(req,res) => {
 			res.redirect('../login')
 		}
 	} catch (e) { 
+		console.log(e)
 		console.log('line 203')
 		res.status(500).send(e)
 	}
