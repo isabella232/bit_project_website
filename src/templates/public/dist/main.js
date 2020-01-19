@@ -81839,6 +81839,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_10__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -81878,6 +81880,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (calendarEl) {
     fetch('/event').then(function (response) {
       response.json().then(function (text) {
+        var _ref3;
+
         var events = [];
 
         for (var i = 0; i < text.length; i++) {
@@ -81894,12 +81898,12 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         }
 
-        var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, {
+        var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__["Calendar"](calendarEl, (_ref3 = {
           plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"]],
           header: {
             left: 'prev,next, today',
             center: 'title',
-            right: 'timeGridMonth,timeGridWeek,timeGridDay,listWeek'
+            right: 'timeGridWeek,timeGridDay,listWeek'
           },
           defaultView: 'dayGridMonth',
           minTime: '7:00:00',
@@ -81914,50 +81918,40 @@ document.addEventListener('DOMContentLoaded', function () {
           },
           eventTextColor: '#ffffff',
           eventColor: '#F2A64A',
-          themeSystem: 'bootstrap',
-          eventClick: function () {
-            var _eventClick = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee2(info) {
-              var getDataAxios, _getDataAxios;
+          themeSystem: 'bootstrap'
+        }, _defineProperty(_ref3, "defaultView", 'timeGridWeek'), _defineProperty(_ref3, "eventClick", function () {
+          var _eventClick = _asyncToGenerator(
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee2(info) {
+            var getDataAxios, _getDataAxios;
 
-              return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                while (1) {
-                  switch (_context2.prev = _context2.next) {
-                    case 0:
-                      _getDataAxios = function _ref2() {
-                        _getDataAxios = _asyncToGenerator(
-                        /*#__PURE__*/
-                        regeneratorRuntime.mark(function _callee() {
-                          var response, show, onChange;
-                          return regeneratorRuntime.wrap(function _callee$(_context) {
-                            while (1) {
-                              switch (_context.prev = _context.next) {
-                                case 0:
-                                  _context.next = 2;
-                                  return axios__WEBPACK_IMPORTED_MODULE_10___default.a.get("/event?eventName=" + info.event.title + "&findEvent=True");
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _getDataAxios = function _ref2() {
+                      _getDataAxios = _asyncToGenerator(
+                      /*#__PURE__*/
+                      regeneratorRuntime.mark(function _callee() {
+                        var response, show, onChange;
+                        return regeneratorRuntime.wrap(function _callee$(_context) {
+                          while (1) {
+                            switch (_context.prev = _context.next) {
+                              case 0:
+                                _context.next = 2;
+                                return axios__WEBPACK_IMPORTED_MODULE_10___default.a.get("/event?eventName=" + info.event.title + "&findEvent=True");
 
-                                case 2:
-                                  response = _context.sent;
-                                  console.log(response.data);
-                                  event = response.data[0];
-                                  show = true;
+                              case 2:
+                                response = _context.sent;
+                                console.log(response.data);
+                                event = response.data[0];
+                                show = true;
 
-                                  onChange = function onChange() {
-                                    console.log("onchange");
-                                    console.log(show);
-                                    show = false;
-                                    console.log("/events/view?eventName=" + info.event.title);
-                                    react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
-                                      show: show,
-                                      onChange: onChange,
-                                      eventName: info.event.title,
-                                      description: event.description,
-                                      location: event.location,
-                                      route: "/events/view?eventName=" + info.event.title
-                                    }), document.getElementById('modal-event'));
-                                  };
-
+                                onChange = function onChange() {
+                                  console.log("onchange");
+                                  console.log(show);
+                                  show = false;
+                                  console.log("/events/view?eventName=" + info.event.title);
                                   react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
                                     show: show,
                                     onChange: onChange,
@@ -81966,41 +81960,50 @@ document.addEventListener('DOMContentLoaded', function () {
                                     location: event.location,
                                     route: "/events/view?eventName=" + info.event.title
                                   }), document.getElementById('modal-event'));
+                                };
 
-                                case 8:
-                                case "end":
-                                  return _context.stop();
-                              }
+                                react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render(react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Example, {
+                                  show: show,
+                                  onChange: onChange,
+                                  eventName: info.event.title,
+                                  description: event.description,
+                                  location: event.location,
+                                  route: "/events/view?eventName=" + info.event.title
+                                }), document.getElementById('modal-event'));
+
+                              case 8:
+                              case "end":
+                                return _context.stop();
                             }
-                          }, _callee);
-                        }));
-                        return _getDataAxios.apply(this, arguments);
-                      };
+                          }
+                        }, _callee);
+                      }));
+                      return _getDataAxios.apply(this, arguments);
+                    };
 
-                      getDataAxios = function _ref() {
-                        return _getDataAxios.apply(this, arguments);
-                      };
+                    getDataAxios = function _ref() {
+                      return _getDataAxios.apply(this, arguments);
+                    };
 
-                      console.log("event click");
-                      console.log(info);
-                      console.log(info.event.title);
-                      getDataAxios();
+                    console.log("event click");
+                    console.log(info);
+                    console.log(info.event.title);
+                    getDataAxios();
 
-                    case 6:
-                    case "end":
-                      return _context2.stop();
-                  }
+                  case 6:
+                  case "end":
+                    return _context2.stop();
                 }
-              }, _callee2);
-            }));
+              }
+            }, _callee2);
+          }));
 
-            function eventClick(_x) {
-              return _eventClick.apply(this, arguments);
-            }
+          function eventClick(_x) {
+            return _eventClick.apply(this, arguments);
+          }
 
-            return eventClick;
-          }()
-        });
+          return eventClick;
+        }()), _ref3));
         calendar.render();
       });
     });

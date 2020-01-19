@@ -54,15 +54,13 @@ const Event = mongoose.model('Event', {
     },
     pendingVolunteers: [{
         volunteer: {
-            default: [],
-            type: mongoose.Schema.Types.ObjectID,
+            type: mongoose.Schema.Types.Object,
             ref: 'User',
         } 
     }],
     acceptedVolunteers: [{
         volunteer: {
-            default: [],
-            type: mongoose.Schema.Types.ObjectID,
+            type: mongoose.Schema.Types.Object,
             ref: 'User',
         } 
     }],
