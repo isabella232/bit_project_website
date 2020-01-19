@@ -31,6 +31,16 @@ const Event = mongoose.model('Event', {
         required: true,
         trim: true
     },
+    end_time:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    end_date:{
+        type: Date,
+        required: true,
+        trim: true
+    },
     location: {
         type: String,
         required: true,

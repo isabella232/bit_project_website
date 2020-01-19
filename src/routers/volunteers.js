@@ -13,6 +13,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // REST APIs
 
 // Add Volunteer
+router.post('/signup', async (req, res) => {
+	console.log(req.body)
+	res.send("Succeed!")
+	const volunteer = new User(req.body)
+	console.log(volunteer)
+	try {
+		await volunteer.save()
+		res.status(201).redirect("/login")
+	} catch (e) {
+		console.log(e);
+		res.status(400).send(e)
+	}
+})
+
 router.post('/volunteers', async (req, res) => {
 	console.log(req.body)
 	const volunteer = new User(req.body)
