@@ -29,7 +29,7 @@
         <h2 class="time"> Starts at {{time}}</h2>
     </div>
    
-    <form action="{{{manageHREF}}}" method="{{{userMethod}}}">
+    <form action="/events/addevent" method="post">
         <input type="hidden" name="eventName" value="{{{eventName}}}">
         <button type="submit">{{{this.text}}}</button>
     </form>

@@ -28,16 +28,16 @@
           <!-- TODO: change it so someone can only select one of Coordinator or Volunteer --> 
           <label> 
             <input type="checkbox" value="coordinator" placeholder="coordinator" name="userType"> Coordinator
-            <input type="hidden" name="manageHREF" value="/events/manage">
+            <!-- <input type="hidden" name="manageHREF" value="/events/manage">
             <input type="hidden" name="text" value="Manage the volunteers for this Event"> 
-            <input type="hidden" name="userMethod" value="get" >
+            <input type="hidden" name="userMethod" value="get" > -->
           </label>
         
           <label> 
             <input type="checkbox" value = "volunteer" placeholder="volunteer" name="userType"> Volunteer
             <input type="hidden" name="manageHREF" value="/events/addevent">
             <input type="hidden" name="text" value="Sign up for this Event"> 
-            <input type="hidden" name="userMethod" value="post">
+            <input type="hidden" name="userMethod" value="patch">
           </label>
 
           <label> 

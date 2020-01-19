@@ -14,9 +14,8 @@ const viewsPath = path.join(__dirname, '../templates/views')
 router.set('view engine', 'hbs')
 router.set('views', viewsPath)
 
-
+// Get home page 
 router.get('',auth, (req, res) => {
-	console.log("index");
 	console.log(req.volunteer);
 	if(req.cookies.auth){	
 		res.render('index',{

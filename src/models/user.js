@@ -59,6 +59,15 @@ const UserSchema = new mongoose.Schema({
     manageHREF: { 
         type: String,
     },
+    userMethod: { 
+        type: String,
+    },
+    // events: [{
+    //     event: {
+    //         type: mongoose.Schema.Types.ObjectID,
+    //         ref: 'Event',
+    //     }
+    // }],
     tokens: [{
         token: {
             type: String, required: true

@@ -42,8 +42,16 @@ const Event = mongoose.model('Event', {
         required: true,
         trim: true
     },
-    volunteers: [{
+    pendingVolunteers: [{
         volunteer: {
+            default: [],
+            type: mongoose.Schema.Types.ObjectID,
+            ref: 'User',
+        } 
+    }],
+    acceptedVolunteers: [{
+        volunteer: {
+            default: [],
             type: mongoose.Schema.Types.ObjectID,
             ref: 'User',
         } 
@@ -53,5 +61,11 @@ const Event = mongoose.model('Event', {
         default: '/turkey-trot'
     }
 })
+
+// Event.virtual('users', {
+//     ref: 'User',
+//     localField: '_id',
+//     foreignField: ''
+// })
 
 module.exports = Event

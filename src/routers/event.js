@@ -15,9 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes to singular event view
 router.get('/events/view', async (req, res) => { 
-	console.log('here')
-	console.log(req.query.eventName)
-	console.log(req.cookies.auth)
 	try { 
 		// Render page if user is logged in
 		if ((req.query.eventName) && (req.cookies.auth)) {
@@ -39,12 +36,12 @@ router.get('/events/view', async (req, res) => {
 				time: events[0].time,
 				description: events[0].description,
 				manageHREF: user.manageHREF,
+				userMethod: user.userMethod,
 				text: user.text,
 			})
 		} else if (req.query.eventName){
-
+			console.log('line 41')
 			const events = await Event.find({"eventName":req.query.eventName})
-			console.log("events",events)
 			res.render('view', {
 				eventName: events[0].eventName,
 				month: events[0].month,
@@ -73,6 +70,7 @@ router.post('/events', async (req, res) =>{
         res.status(400).send(e)
 	}
 }) 
+
 // Routes to Events Browsing Page
 router.get('/events', async (req, res) => { 
 	try { 
@@ -103,11 +101,8 @@ router.get('/events', async (req, res) => {
 router.get('/event', async (req, res) => { 
 	//Create variable to store filter
 	var query = {}
-	console.log()
 	// TODO: Link search bar button to actually retrive it upon searching
 	try { 
-		console.log("eventName",req.query.eventName)
-		console.log("findEvent",req.query.findEvent)
 		if (req.query.eventName && req.query.findEvent ){
 			const events = await Event.find({"eventName":req.query.eventName})
 			res.send(events)
@@ -119,7 +114,6 @@ router.get('/event', async (req, res) => {
 				events: events
 			})
 		} else { 
-			console.log('sending all events')
 			const events = await Event.find({})
 			res.send(events)
 		}
@@ -129,11 +123,7 @@ router.get('/event', async (req, res) => {
 })
 
 //TODO: Manage Volunteers
-// Coordinator - manage volunteers page
-// Volunteer - manage events page
-// Not logged in - Log in to see page
 router.get('/events/manage', auth, async(req,res) => { 
-
 	try { 
 		//Render page if user is logged in
 		if ((req.cookies.auth) && (req.query.eventName)) { 
@@ -160,16 +150,11 @@ router.get('/events/manage', auth, async(req,res) => {
 					description: events[0].description
 					//users: events[0].users
 				})
-			// TODO: Render manage events page
-			} else if(user[0].userType == 'volunteer') { 
-				res.render('manage')
-			// Not a coordinator or volunteer, error
 			} else {
 				res.status(500).send()
 			}
 		// Not logged in send to login page
 		} else { 
-			console.log('rendering login')
 			res.redirect('../login')
 		}
 	} catch (e) { 
@@ -177,12 +162,48 @@ router.get('/events/manage', auth, async(req,res) => {
 	}
 })
 
-//TODO: add an event to volunteer using signup button
-router.patch('/events/addevent', auth, async(req,res) => {
+//TODO: associate an event and a user using signup button
+router.post('/events/addevent', auth, async(req,res) => {
 	try { 
+		//Render page if user is logged in
+		if ((req.cookies.auth) && (req.body.eventName)) {
+			// Get a user if logged in
+			const token = req.cookies.auth.replace('Bearer ', '')   
+		    const decoded = jwt.verify(token, 'thisismysecret')       
+		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
 
+		    // Throw error if no user
+			if (!user) { 
+		            res.clearCookie('auth')
+		            throw new Error()
+		    }
+
+			// Check that user is of volunteer type
+			if (user.userType == 'volunteer') {
+				console.log('line 184')
+				// Update event
+				const event = await Event.find({"eventName":req.body.eventName})
+				console.log('line 186')
+				console.log(event.pendingVolunteers)
+				event.pendingVolunteers.push(user)
+				console.log('line 187')
+
+				// Update user
+				//const user = await User.findOneAndUpdate()
+				
+				//res.redirect('')
+			console.log('line 194')
+			} else {
+				res.status(500).send()
+			}
+		// Not logged in, send to login page
+		} else { 
+			console.log('rendering login')
+			res.redirect('../login')
+		}
 	} catch (e) { 
-
+		console.log('line 203')
+		res.status(500).send(e)
 	}
 })
 
