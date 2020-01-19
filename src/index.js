@@ -42,6 +42,12 @@ app.use(eventRouter)
 app.use(appRouter)
 app.use(pusherRouter)
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 const Chatkit = require('@pusher/chatkit-server');
 
 const chatkit = new Chatkit.default({

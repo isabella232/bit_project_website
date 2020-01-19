@@ -6,8 +6,10 @@ import listPlugin from '@fullcalendar/list';
 import Chat from './chatroom';
 import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import bootstrapPlugin from '@fullcalendar/bootstrap';
+
 import { Button,Modal } from 'react-bootstrap'
+
 import axios from 'axios';
 
 function Example(props) {
@@ -50,25 +52,29 @@ document.addEventListener('DOMContentLoaded', function() {
           for (var i = 0; i < text.length; i++) {
             var date = new Date(text[i].date);          
             date.setHours(parseInt(text[i].time.slice(0,2),10),parseInt(text[i].time.slice(3,5),10));
+            var end_date = new Date(text[i].end_date);          
+            end_date.setHours(parseInt(text[i].time.slice(0,2),10),parseInt(text[i].end_time.slice(3,5),10));
             events.push({
               "title":  text[i].eventName,
               "start": date.toISOString(),
+              "end": end_date.toISOString(),
             });
           }
           var calendar = new Calendar(calendarEl, {
-            plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
+            plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, bootstrapPlugin  ],
             header: {
               left: 'prev,next today',
               center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              right: 'timeGridWeek,timeGridDay,listWeek'
             },
             minTime: '7:00:00',
             maxTime: '20:00:00',
-            defaultDate: '2020-01-01',
             navLinks: true, // can click day/week names to navigate views
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             events: {events},
+            themeSystem: 'bootstrap',
+            defaultView: 'timeGridWeek',
             eventClick: async function(info){  
               console.log("event click")
               console.log(info)
@@ -91,12 +97,8 @@ document.addEventListener('DOMContentLoaded', function() {
                      description={event.description} location={event.location} route={"/events/view?eventName="+info.event.title} />,  document.getElementById('modal-event'));
                   
               }
-              getDataAxios()
-              
-                
-              
+              getDataAxios()             
             }
-              
           });
           calendar.render();
       });

@@ -24,7 +24,7 @@ router.get('',auth, (req, res) => {
 		})
 	}
 	else{
-		res.render('profile',{
+		res.render('index',{
 			profile: "Login",
 			profileLink: "/login"
 		})
