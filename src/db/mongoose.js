@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-const urlAndDBName = 'mongodb://127.0.0.1:27017/volunteer-api'
 MONGODB_URL="mongodb+srv://mongobit:bitproject2019@cluster0-cbnni.mongodb.net/volunteer-api"
 
 

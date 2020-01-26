@@ -15,9 +15,8 @@ router.set('view engine', 'hbs')
 router.set('views', viewsPath)
 
 // Get home page 
-router.get('',auth, (req, res) => {
-	console.log(req.volunteer);
-	if(req.cookies.auth){	
+router.get('',(req, res) => {
+	if(req.cookies){	
 		res.render('index',{
 			profile: "Profile",
 			profileLink: "/profile"

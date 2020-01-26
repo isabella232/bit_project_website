@@ -161,6 +161,8 @@ router.get('/events/manage', auth, async(req,res) => {
 	}
 })
 
+  
+
 //TODO: associate an event and a user using signup button
 router.post('/events/addevent', auth, async(req,res) => {
 	try { 
@@ -170,6 +172,17 @@ router.post('/events/addevent', auth, async(req,res) => {
 			const token = req.cookies.auth.replace('Bearer ', '')   
 		    const decoded = jwt.verify(token, 'thisismysecret')       
 		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+			const accountSid = 'AC641dbcb14c529a059517bd8948ef128f';
+			const authToken = 'cda892d861df16ec203cbcb265f25569';
+			const client = require('twilio')(accountSid, authToken);
+			console.log("addevent")
+			client.messages
+				.create({
+					body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+					from: '+19713404426',
+					to: '+5307609164'
+				})
+				.then(message => console.log(message.sid));
 
 		    // Throw error if no user
 			if (!user) { 
@@ -186,8 +199,12 @@ router.post('/events/addevent', auth, async(req,res) => {
 
 				// Update user
 				//const user = await User.findOneAndUpdate()
-				
-				//res.redirect('')
+				console.log("volunteer")
+				res.render('events',{
+					profile: "Profile",
+					profileLink: "/profile",
+					events: events
+				})
 			} else {
 				res.status(500).send()
 			}

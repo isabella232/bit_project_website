@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser')
 const volunteerRouter = require('./routers/volunteers')
 const eventRouter = require('./routers/event')
 const pusherRouter = require('./routers/chatroom')
+const twilioRouter = require('./routers/appointments')
 const appRouter = require('./routers/app')
 const app = express()
 const port = process.env.PORT || 3000
@@ -41,6 +42,7 @@ app.use(volunteerRouter)
 app.use(eventRouter)
 app.use(appRouter)
 app.use(pusherRouter)
+app.use(twilioRouter)
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "https://localhost:3000");
