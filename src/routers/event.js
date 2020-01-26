@@ -1,6 +1,7 @@
 
 const express = require('express')
 require('../db/mongoose')
+const cfg = require('../../config/config');
 const Event = require('../models/events')
 const jwt = require('jsonwebtoken') 
 const router = new express.Router()
@@ -172,8 +173,8 @@ router.post('/events/addevent', auth, async(req,res) => {
 			const token = req.cookies.auth.replace('Bearer ', '')   
 		    const decoded = jwt.verify(token, 'thisismysecret')       
 		    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
-			const accountSid = 'AC641dbcb14c529a059517bd8948ef128f';
-			const authToken = 'cda892d861df16ec203cbcb265f25569';
+			const accountSid = cfg.twilioAccountSid
+			const authToken = cfg.twilioAuthToken;
 			const client = require('twilio')(accountSid, authToken);
 			console.log("addevent")
 			client.messages
